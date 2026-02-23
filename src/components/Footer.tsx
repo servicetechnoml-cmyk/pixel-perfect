@@ -19,25 +19,32 @@ const Footer = () => (
         <div>
           <h4 className="font-display font-semibold mb-4">Quick Links</h4>
           <div className="flex flex-col gap-2">
-            {["Home", "Services", "About", "Contact"].map((item) => (
-              <Link
-                key={item}
-                to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
-                className="text-sm text-primary-foreground/70 hover:text-primary-foreground transition-colors"
-              >
-                {item}
+            {[
+              { label: "Home", path: "/" },
+              { label: "Services", path: "/services" },
+              { label: "Projects", path: "/projects" },
+              { label: "Blog", path: "/blog" },
+              { label: "About", path: "/about" },
+              { label: "Contact", path: "/contact" },
+            ].map((item) => (
+              <Link key={item.path} to={item.path} className="text-sm text-primary-foreground/70 hover:text-primary-foreground transition-colors">
+                {item.label}
               </Link>
             ))}
           </div>
         </div>
 
         <div>
-          <h4 className="font-display font-semibold mb-4">Services</h4>
-          <div className="flex flex-col gap-2 text-sm text-primary-foreground/70">
-            <span>AI Automation</span>
-            <span>Custom Software</span>
-            <span>Web Development</span>
-            <span>Mobile Apps</span>
+          <h4 className="font-display font-semibold mb-4">More</h4>
+          <div className="flex flex-col gap-2">
+            {[
+              { label: "Certifications", path: "/certifications" },
+              { label: "Our Journey", path: "/history" },
+            ].map((item) => (
+              <Link key={item.path} to={item.path} className="text-sm text-primary-foreground/70 hover:text-primary-foreground transition-colors">
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
 
