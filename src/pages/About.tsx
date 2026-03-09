@@ -10,11 +10,18 @@ const fadeUp = {
 };
 
 const values = [
-  { icon: Lightbulb, title: "Innovation", desc: "Pushing boundaries with cutting-edge technology" },
+  { icon: Lightbulb, title: "Innovation", desc: "Pushing boundaries with cutting-edge AI & tech" },
   { icon: Shield, title: "Transparency", desc: "Open communication and honest business practices" },
   { icon: Star, title: "Quality", desc: "Excellence in every line of code we write" },
   { icon: Users, title: "Client-Centric", desc: "Your success is our primary measure of achievement" },
   { icon: Heart, title: "Long-Term Partnerships", desc: "Building relationships that grow with your business" },
+];
+
+const achievements = [
+  { icon: Award, value: "100+", label: "Projects Delivered" },
+  { icon: Globe, value: "15+", label: "Countries Served" },
+  { icon: Users, value: "50+", label: "Expert Team Members" },
+  { icon: Code2, value: "₹500Cr+", label: "Transactions Processed" },
 ];
 
 const About = () => (
