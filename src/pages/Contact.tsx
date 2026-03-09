@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Send } from "lucide-react";
+import { Mail, MapPin, Send, Phone, Clock } from "lucide-react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -21,21 +21,26 @@ const Contact = () => {
   return (
     <div>
       {/* Hero */}
-      <section className="py-24 bg-hero text-primary-foreground">
-        <div className="container mx-auto px-4 text-center">
+      <section className="py-32 bg-gradient-to-br from-primary via-purple-600 to-primary text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-white blur-[120px]" />
+          <div className="absolute bottom-0 right-1/4 w-64 h-64 rounded-full bg-purple-200 blur-[80px]" />
+        </div>
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-white/70 text-sm font-semibold uppercase tracking-widest mb-4">Get In Touch</motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-display text-4xl md:text-5xl font-bold mb-4"
+            className="font-display text-5xl md:text-6xl font-bold mb-6"
           >
-            Let's Build Something Powerful Together
+            Let's Build Something Powerful
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0, transition: { delay: 0.1 } }}
-            className="text-primary-foreground/70 max-w-2xl mx-auto text-lg"
+            animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
+            className="text-white/80 max-w-2xl mx-auto text-xl leading-relaxed"
           >
-            Get a custom proposal tailored to your business needs
+            Get a custom proposal tailored to your business needs — we respond within 24 hours.
           </motion.p>
         </div>
       </section>
@@ -44,35 +49,30 @@ const Contact = () => {
         <div className="container mx-auto px-4">
           <div className="grid gap-12 lg:grid-cols-3 max-w-5xl mx-auto">
             {/* Contact Info */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="space-y-6">
               <motion.h2 variants={fadeUp} custom={0} className="font-display text-2xl font-bold text-foreground">
                 Contact Information
               </motion.h2>
-              <motion.div variants={fadeUp} custom={1} className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-                  <Mail className="text-accent" size={20} />
-                </div>
-                <div>
-                  <p className="font-medium text-foreground text-sm">Email</p>
-                  <a href="mailto:service@technoml.in" className="text-sm text-muted-foreground hover:text-accent transition-colors">
-                    service@technoml.in
-                  </a>
-                </div>
-              </motion.div>
-              <motion.div variants={fadeUp} custom={2} className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-                  <MapPin className="text-accent" size={20} />
-                </div>
-                <div>
-                  <p className="font-medium text-foreground text-sm">Location</p>
-                  <p className="text-sm text-muted-foreground">India</p>
-                </div>
-              </motion.div>
+              {[
+                { icon: Mail, label: "Email", value: "service@technoml.in", href: "mailto:service@technoml.in" },
+                { icon: Phone, label: "Phone", value: "+91 98765 43210", href: "tel:+919876543210" },
+                { icon: MapPin, label: "Location", value: "India (Serving Globally)" },
+                { icon: Clock, label: "Response Time", value: "Within 24 hours" },
+              ].map((c, i) => (
+                <motion.div key={c.label} variants={fadeUp} custom={i + 1} className="flex items-start gap-4 p-4 rounded-xl bg-card shadow-card border border-primary/10">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center shrink-0">
+                    <c.icon className="text-primary" size={22} />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground text-sm">{c.label}</p>
+                    {c.href ? (
+                      <a href={c.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">{c.value}</a>
+                    ) : (
+                      <p className="text-sm text-muted-foreground">{c.value}</p>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
 
             {/* Form */}
@@ -166,9 +166,9 @@ const Contact = () => {
                     />
                   </motion.div>
                   <motion.div variants={fadeUp} custom={7}>
-                    <button
+                  <button
                       type="submit"
-                      className="w-full rounded-lg bg-accent px-6 py-3 font-semibold text-accent-foreground transition-all hover:opacity-90 flex items-center justify-center gap-2"
+                      className="w-full rounded-xl bg-gradient-to-r from-primary to-purple-600 text-white px-6 py-3.5 font-bold hover:shadow-lg hover:shadow-primary/25 hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
                     >
                       Send Message <Send size={18} />
                     </button>

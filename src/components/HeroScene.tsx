@@ -29,7 +29,7 @@ const ParticleField = () => {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.03} color="#4d8df7" transparent opacity={0.6} sizeAttenuation />
+      <pointsMaterial size={0.03} color="#a855f7" transparent opacity={0.6} sizeAttenuation />
     </points>
   );
 };
@@ -49,7 +49,7 @@ const FloatingOrb = ({ position, color, speed }: { position: [number, number, nu
     <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
       <mesh ref={ref} position={position}>
         <icosahedronGeometry args={[0.6, 4]} />
-        <MeshDistortMaterial color={color} distort={0.4} speed={2} roughness={0.2} metalness={0.8} />
+        <MeshDistortMaterial color={color} distort={0.4} speed={2} roughness={0.1} metalness={0.9} />
       </mesh>
     </Float>
   );
@@ -88,13 +88,13 @@ const NeuralConnections = () => {
       {nodes.map((node, i) => (
         <mesh key={i} position={node.pos}>
           <sphereGeometry args={[0.04, 8, 8]} />
-          <meshBasicMaterial color="#4d8df7" />
+          <meshBasicMaterial color="#a855f7" />
         </mesh>
       ))}
       {lines.map((line, i) => {
         const geometry = new THREE.BufferGeometry().setFromPoints(line);
         return (
-          <primitive key={i} object={new THREE.Line(geometry, new THREE.LineBasicMaterial({ color: "#4d8df7", transparent: true, opacity: 0.15 }))} />
+          <primitive key={i} object={new THREE.Line(geometry, new THREE.LineBasicMaterial({ color: "#a855f7", transparent: true, opacity: 0.15 }))} />
         );
       })}
     </group>
@@ -111,12 +111,12 @@ const HeroScene = () => {
       >
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
-        <pointLight position={[-3, 2, 2]} intensity={0.8} color="#4d8df7" />
-        <pointLight position={[3, -2, -2]} intensity={0.5} color="#38bdf8" />
+        <pointLight position={[-3, 2, 2]} intensity={0.8} color="#a855f7" />
+        <pointLight position={[3, -2, -2]} intensity={0.5} color="#c084fc" />
 
-        <FloatingOrb position={[-2.5, 0.5, 0]} color="#4d8df7" speed={0.8} />
-        <FloatingOrb position={[2.8, -0.3, -1]} color="#38bdf8" speed={1.2} />
-        <FloatingOrb position={[0.5, 1.5, -2]} color="#6366f1" speed={0.6} />
+        <FloatingOrb position={[-2.5, 0.5, 0]} color="#a855f7" speed={0.8} />
+        <FloatingOrb position={[2.8, -0.3, -1]} color="#c084fc" speed={1.2} />
+        <FloatingOrb position={[0.5, 1.5, -2]} color="#e879f9" speed={0.6} />
 
         <ParticleField />
         <NeuralConnections />

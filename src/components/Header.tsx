@@ -27,11 +27,11 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border shadow-sm">
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="TechnoML" className="h-10 w-10" />
-          <span className="font-display text-xl font-bold text-foreground">TechnoML</span>
+          <span className="font-display text-xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">TechnoML</span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-6">
@@ -39,15 +39,15 @@ const Header = () => {
             <Link
               key={item.path}
               to={item.path}
-              className={`text-sm font-medium transition-colors hover:text-accent ${
-                location.pathname === item.path ? "text-accent" : "text-muted-foreground"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                location.pathname === item.path ? "text-primary" : "text-muted-foreground"
               }`}
             >
               {item.label}
             </Link>
           ))}
           {isAdmin && (
-            <Link to="/admin" className="inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline">
+            <Link to="/admin" className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
               <LayoutDashboard size={16} /> Admin
             </Link>
           )}
@@ -58,7 +58,7 @@ const Header = () => {
           ) : (
             <Link
               to="/login"
-              className="inline-flex items-center justify-center rounded-lg bg-accent px-5 py-2 text-sm font-semibold text-accent-foreground transition-all hover:opacity-90"
+              className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-primary to-purple-600 text-white px-5 py-2 text-sm font-bold hover:shadow-lg hover:shadow-primary/25 hover:scale-105 transition-all"
             >
               Sign In
             </Link>
