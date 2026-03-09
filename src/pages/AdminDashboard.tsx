@@ -7,6 +7,7 @@ import AdminProjects from "@/components/admin/AdminProjects";
 import AdminCertifications from "@/components/admin/AdminCertifications";
 import AdminHistory from "@/components/admin/AdminHistory";
 import AdminUsers from "@/components/admin/AdminUsers";
+import AdminInternships from "@/components/admin/AdminInternships";
 
 const AdminDashboard = () => {
   const { user, isAdmin, loading } = useAuth();
@@ -20,17 +21,19 @@ const AdminDashboard = () => {
       <div className="container mx-auto px-4">
         <h1 className="font-display text-3xl font-bold text-foreground mb-8">Admin Dashboard</h1>
         <Tabs value={tab} onValueChange={setTab}>
-          <TabsList className="mb-8">
+          <TabsList className="mb-8 flex-wrap">
             <TabsTrigger value="blog">Blog</TabsTrigger>
             <TabsTrigger value="projects">Projects</TabsTrigger>
             <TabsTrigger value="certifications">Certifications</TabsTrigger>
             <TabsTrigger value="history">History</TabsTrigger>
+            <TabsTrigger value="internships">Internships</TabsTrigger>
             <TabsTrigger value="users">Users</TabsTrigger>
           </TabsList>
           <TabsContent value="blog"><AdminBlog /></TabsContent>
           <TabsContent value="projects"><AdminProjects /></TabsContent>
           <TabsContent value="certifications"><AdminCertifications /></TabsContent>
           <TabsContent value="history"><AdminHistory /></TabsContent>
+          <TabsContent value="internships"><AdminInternships /></TabsContent>
           <TabsContent value="users"><AdminUsers /></TabsContent>
         </Tabs>
       </div>

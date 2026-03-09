@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, LogOut, LayoutDashboard } from "lucide-react";
+import { Menu, X, LogOut, LayoutDashboard, ChevronDown, GraduationCap, BookOpen, Award, ShieldCheck } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import logo from "@/assets/logo.png";
 
@@ -15,16 +15,36 @@ const navItems = [
   { label: "Contact", path: "/contact" },
 ];
 
+const internshipSubMenu = [
+  { label: "Programs", path: "/internships", icon: BookOpen },
+  { label: "My Dashboard", path: "/student-dashboard", icon: GraduationCap },
+  { label: "Verify Certificate", path: "/verify-certificate", icon: ShieldCheck },
+];
+
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [internshipOpen, setInternshipOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isAdmin, signOut } = useAuth();
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setInternshipOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
   };
+
+  const isInternshipRoute = ["/internships", "/student-dashboard", "/verify-certificate"].includes(location.pathname);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border shadow-sm">
@@ -34,7 +54,7 @@ const Header = () => {
           <span className="font-display text-xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">TechnoML</span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-6">
+        <nav className="hidden lg:flex items-center gap-5">
           {navItems.map((item) => (
             <Link
               key={item.path}
@@ -46,6 +66,35 @@ const Header = () => {
               {item.label}
             </Link>
           ))}
+
+          {/* Internship Dropdown */}
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setInternshipOpen(!internshipOpen)}
+              className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${
+                isInternshipRoute ? "text-primary" : "text-muted-foreground"
+              }`}
+            >
+              <GraduationCap size={16} /> Internships <ChevronDown size={14} className={`transition-transform ${internshipOpen ? "rotate-180" : ""}`} />
+            </button>
+            {internshipOpen && (
+              <div className="absolute top-full mt-2 right-0 w-52 bg-popover border border-border rounded-lg shadow-lg py-1 z-50">
+                {internshipSubMenu.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => setInternshipOpen(false)}
+                    className={`flex items-center gap-2 px-4 py-2.5 text-sm transition-colors hover:bg-accent ${
+                      location.pathname === item.path ? "text-primary bg-accent/50" : "text-foreground"
+                    }`}
+                  >
+                    <item.icon size={15} /> {item.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
           {isAdmin && (
             <Link to="/admin" className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
               <LayoutDashboard size={16} /> Admin
@@ -84,6 +133,21 @@ const Header = () => {
               {item.label}
             </Link>
           ))}
+          <div className="border-t border-border my-2 pt-2">
+            <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1 px-1">Internships</p>
+            {internshipSubMenu.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                onClick={() => setMobileOpen(false)}
+                className={`flex items-center gap-2 py-2.5 text-sm font-medium transition-colors ${
+                  location.pathname === item.path ? "text-primary" : "text-muted-foreground"
+                }`}
+              >
+                <item.icon size={15} /> {item.label}
+              </Link>
+            ))}
+          </div>
           {isAdmin && (
             <Link to="/admin" onClick={() => setMobileOpen(false)} className="block py-3 text-sm font-medium text-accent">
               Admin Dashboard
