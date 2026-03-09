@@ -209,7 +209,9 @@ const StudentDashboard = () => {
         <h1 className="font-display text-3xl font-bold text-foreground mb-8">My Internship Dashboard</h1>
 
         {loading ? (
-          <p className="text-muted-foreground">Loading...</p>
+          <div className="grid md:grid-cols-2 gap-4">
+            {[1, 2].map((i) => (<div key={i} className="h-40 bg-muted rounded-xl animate-pulse" />))}
+          </div>
         ) : (
           <Tabs defaultValue="applications">
             <TabsList className="mb-8">

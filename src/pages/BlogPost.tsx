@@ -15,7 +15,19 @@ const BlogPost = () => {
     },
   });
 
-  if (isLoading) return <div className="py-24 text-center text-muted-foreground">Loading...</div>;
+  if (isLoading) return (
+    <div className="py-24">
+      <div className="container mx-auto px-4 max-w-3xl space-y-6">
+        <Skeleton className="h-4 w-24" />
+        <Skeleton className="w-full h-64 rounded-xl" />
+        <Skeleton className="h-3 w-32" />
+        <Skeleton className="h-8 w-3/4" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-2/3" />
+      </div>
+    </div>
+  );
   if (!post) return <div className="py-24 text-center text-muted-foreground">Post not found.</div>;
 
   return (

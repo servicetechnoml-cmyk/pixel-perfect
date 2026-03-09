@@ -27,7 +27,16 @@ const Certifications = () => {
           <motion.p variants={fadeUp} custom={1} className="text-muted-foreground max-w-2xl mx-auto">Our achievements and recognized certifications.</motion.p>
         </motion.div>
         {isLoading ? (
-          <div className="text-center text-muted-foreground">Loading...</div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="rounded-xl bg-card p-6 shadow-card space-y-3">
+                <Skeleton className="w-12 h-12 rounded-lg" />
+                <Skeleton className="h-5 w-3/4" />
+                <Skeleton className="h-3 w-1/3" />
+                <Skeleton className="h-4 w-full" />
+              </div>
+            ))}
+          </div>
         ) : certs?.length === 0 ? (
           <div className="text-center text-muted-foreground">No certifications posted yet.</div>
         ) : (

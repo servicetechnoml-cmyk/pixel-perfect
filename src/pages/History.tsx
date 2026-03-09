@@ -27,7 +27,18 @@ const History = () => {
           <motion.p variants={fadeUp} custom={1} className="text-muted-foreground max-w-2xl mx-auto">Key milestones in the TechnoML story.</motion.p>
         </motion.div>
         {isLoading ? (
-          <div className="text-center text-muted-foreground">Loading...</div>
+          <div className="max-w-2xl mx-auto space-y-8">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="flex items-start gap-6">
+                <Skeleton className="w-8 h-8 rounded-full flex-shrink-0" />
+                <div className="flex-1 rounded-xl bg-card p-6 shadow-card space-y-2">
+                  <Skeleton className="h-3 w-20" />
+                  <Skeleton className="h-5 w-1/2" />
+                  <Skeleton className="h-4 w-full" />
+                </div>
+              </div>
+            ))}
+          </div>
         ) : events?.length === 0 ? (
           <div className="text-center text-muted-foreground">Timeline coming soon.</div>
         ) : (

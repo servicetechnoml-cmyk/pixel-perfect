@@ -28,7 +28,19 @@ const ProjectsPage = () => {
           <motion.p variants={fadeUp} custom={1} className="text-muted-foreground max-w-2xl mx-auto">Showcasing our best work across AI, web, and mobile.</motion.p>
         </motion.div>
         {isLoading ? (
-          <div className="text-center text-muted-foreground">Loading...</div>
+          <div className="grid gap-8 md:grid-cols-2">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="rounded-xl bg-card shadow-card overflow-hidden">
+                <Skeleton className="w-full h-56" />
+                <div className="p-6 space-y-3">
+                  <Skeleton className="h-6 w-3/4" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-2/3" />
+                  <div className="flex gap-2"><Skeleton className="h-5 w-16 rounded-full" /><Skeleton className="h-5 w-16 rounded-full" /></div>
+                </div>
+              </div>
+            ))}
+          </div>
         ) : projects?.length === 0 ? (
           <div className="text-center text-muted-foreground">No projects to show yet.</div>
         ) : (
