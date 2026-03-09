@@ -94,7 +94,7 @@ const NeuralConnections = () => {
       {lines.map((line, i) => {
         const geometry = new THREE.BufferGeometry().setFromPoints(line);
         return (
-          <primitive key={i} object={new THREE.Line(geometry, new THREE.LineBasicMaterial({ color: "#4d8df7", transparent: true, opacity: 0.15 }))} />
+          <primitive key={i} object={new THREE.Line(geometry, new THREE.LineBasicMaterial({ color: "#a855f7", transparent: true, opacity: 0.15 }))} />
         );
       })}
     </group>
