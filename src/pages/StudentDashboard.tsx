@@ -178,7 +178,17 @@ const StudentDashboard = () => {
     setSubmitting(null);
   };
 
-  if (authLoading) return <div className="py-24 text-center text-muted-foreground">Loading...</div>;
+  if (authLoading) return (
+    <div className="py-24">
+      <div className="container mx-auto px-4 space-y-6">
+        <div className="h-8 w-64 bg-muted rounded animate-pulse" />
+        <div className="h-10 w-80 bg-muted rounded animate-pulse" />
+        <div className="grid md:grid-cols-2 gap-4">
+          {[1, 2].map((i) => (<div key={i} className="h-40 bg-muted rounded-xl animate-pulse" />))}
+        </div>
+      </div>
+    </div>
+  );
   if (!user) return <Navigate to="/login" replace />;
 
   const approvedApps = applications.filter((a) => a.status === "approved");
