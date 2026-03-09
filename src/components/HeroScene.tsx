@@ -29,7 +29,7 @@ const ParticleField = () => {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.03} color="#4d8df7" transparent opacity={0.6} sizeAttenuation />
+      <pointsMaterial size={0.03} color="#a855f7" transparent opacity={0.6} sizeAttenuation />
     </points>
   );
 };
