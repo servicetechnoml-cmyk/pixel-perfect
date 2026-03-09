@@ -48,6 +48,7 @@ const App = () => (
               <Route path="/internships" element={<Internships />} />
               <Route path="/student-dashboard" element={<StudentDashboard />} />
               <Route path="/verify-certificate" element={<VerifyCertificate />} />
+              <Route path="/certificate/:id" element={<CertificatePage />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

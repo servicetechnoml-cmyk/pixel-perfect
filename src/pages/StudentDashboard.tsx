@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Award, Clock, Send, ExternalLink } from "lucide-react";
+import { Award, Clock, Send, ExternalLink, AlertTriangle, CalendarDays } from "lucide-react";
 
 type Application = {
   id: string;
@@ -54,8 +54,45 @@ const statusColor: Record<string, string> = {
   completed: "bg-blue-500/10 text-blue-600 border-blue-500/20",
 };
 
+const getDaysRemaining = (endDate: string | null): number | null => {
+  if (!endDate) return null;
+  const end = new Date(endDate);
+  const now = new Date();
+  return Math.ceil((end.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+};
+
+const DeadlineTracker = ({ app, tasks, submissions }: { app: Application; tasks: Task[]; submissions: Submission[] }) => {
+  const daysLeft = getDaysRemaining(app.end_date);
+  const domainTasks = tasks.filter((t) => t.domain_id === app.domain_id);
+  const submittedTaskIds = submissions
+    .filter((s) => s.application_id === app.id)
+    .map((s) => s.task_id);
+  const pendingTasks = domainTasks.filter((t) => !submittedTaskIds.includes(t.id));
+  const isOverdue = daysLeft !== null && daysLeft < 0;
+  const isUrgent = daysLeft !== null && daysLeft >= 0 && daysLeft <= 7;
+
+  if (daysLeft === null) return null;
+
+  return (
+    <div className={`rounded-lg p-3 text-sm ${isOverdue ? "bg-destructive/10 border border-destructive/30" : isUrgent ? "bg-yellow-500/10 border border-yellow-500/30" : "bg-muted border border-border"}`}>
+      <div className="flex items-center gap-2 mb-1">
+        {isOverdue ? <AlertTriangle size={14} className="text-destructive" /> : <CalendarDays size={14} className="text-muted-foreground" />}
+        <span className={`font-medium ${isOverdue ? "text-destructive" : isUrgent ? "text-yellow-600" : "text-foreground"}`}>
+          {isOverdue ? `Overdue by ${Math.abs(daysLeft)} day(s)` : `${daysLeft} day(s) remaining`}
+        </span>
+      </div>
+      {pendingTasks.length > 0 && (
+        <p className={`text-xs ${isOverdue ? "text-destructive/80" : "text-muted-foreground"}`}>
+          {pendingTasks.length} task(s) not yet submitted
+        </p>
+      )}
+    </div>
+  );
+};
+
 const StudentDashboard = () => {
   const { user, loading: authLoading } = useAuth();
+  const navigate = useNavigate();
   const [applications, setApplications] = useState<Application[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [submissions, setSubmissions] = useState<Submission[]>([]);
@@ -71,13 +108,11 @@ const StudentDashboard = () => {
   const fetchAll = async () => {
     if (!user) return;
 
-    // Fetch applications
     const { data: apps } = await supabase
       .from("internship_applications")
       .select("*")
       .eq("user_id", user.id);
 
-    // Fetch domain info for each application
     const domainIds = [...new Set((apps || []).map((a) => a.domain_id))];
     let domainMap: Record<string, { title: string; duration_months: number }> = {};
     if (domainIds.length > 0) {
@@ -93,7 +128,6 @@ const StudentDashboard = () => {
     const enrichedApps = (apps || []).map((a) => ({ ...a, domain: domainMap[a.domain_id] }));
     setApplications(enrichedApps);
 
-    // Fetch tasks for approved domains
     const approvedDomainIds = enrichedApps.filter((a) => a.status === "approved").map((a) => a.domain_id);
     if (approvedDomainIds.length > 0) {
       const { data: tasksData } = await supabase
@@ -104,7 +138,6 @@ const StudentDashboard = () => {
       setTasks(tasksData || []);
     }
 
-    // Fetch submissions
     const appIds = (apps || []).map((a) => a.id);
     if (appIds.length > 0) {
       const { data: subs } = await supabase
@@ -114,7 +147,6 @@ const StudentDashboard = () => {
       setSubmissions(subs || []);
     }
 
-    // Fetch certificates
     const { data: certs } = await supabase
       .from("internship_certificates")
       .select("*")
@@ -193,17 +225,20 @@ const StudentDashboard = () => {
                           {app.start_date && ` • Started: ${new Date(app.start_date).toLocaleDateString()}`}
                         </CardDescription>
                       </CardHeader>
-                      {app.status === "approved" && (
-                        <CardContent>
-                          <div className="space-y-2">
-                            <div className="flex justify-between text-sm text-muted-foreground">
-                              <span>Progress</span>
-                              <span>{getProgress(app)}%</span>
+                      <CardContent className="space-y-3">
+                        {app.status === "approved" && (
+                          <>
+                            <div className="space-y-2">
+                              <div className="flex justify-between text-sm text-muted-foreground">
+                                <span>Progress</span>
+                                <span>{getProgress(app)}%</span>
+                              </div>
+                              <Progress value={getProgress(app)} />
                             </div>
-                            <Progress value={getProgress(app)} />
-                          </div>
-                        </CardContent>
-                      )}
+                            <DeadlineTracker app={app} tasks={tasks} submissions={submissions} />
+                          </>
+                        )}
+                      </CardContent>
                     </Card>
                   ))}
                 </div>
@@ -309,14 +344,21 @@ const StudentDashboard = () => {
                         <p className="text-xs text-muted-foreground">
                           Issued: {cert.issue_date ? new Date(cert.issue_date).toLocaleDateString() : "N/A"}
                         </p>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="mt-3"
-                          onClick={() => window.open(`/verify-certificate?id=${cert.id}`, "_blank")}
-                        >
-                          Verify Certificate
-                        </Button>
+                        <div className="flex gap-2 mt-3">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => window.open(`/verify-certificate?id=${cert.id}`, "_blank")}
+                          >
+                            Verify
+                          </Button>
+                          <Button
+                            size="sm"
+                            onClick={() => navigate(`/certificate/${cert.id}`)}
+                          >
+                            <Award size={14} className="mr-1" /> View & Download
+                          </Button>
+                        </div>
                       </CardContent>
                     </Card>
                   ))}

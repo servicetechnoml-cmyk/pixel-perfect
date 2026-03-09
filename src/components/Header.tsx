@@ -140,7 +140,7 @@ const Header = () => {
           ))}
           <div className="border-t border-border my-2 pt-2">
             <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1 px-1">Internships</p>
-            {internshipSubMenu.map((item) => (
+            {getInternshipSubMenu(!!user).map((item) => (
               <Link
                 key={item.path}
                 to={item.path}

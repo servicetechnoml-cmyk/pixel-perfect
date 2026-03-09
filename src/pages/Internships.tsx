@@ -5,8 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { Clock, BookOpen, CheckCircle } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 type Domain = {
   id: string;
@@ -23,6 +26,8 @@ const Internships = () => {
   const [appliedIds, setAppliedIds] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [applying, setApplying] = useState<string | null>(null);
+  const [selectedDomain, setSelectedDomain] = useState<Domain | null>(null);
+  const [formData, setFormData] = useState({ full_name: "", email: "", phone: "", college: "" });
 
   useEffect(() => {
     fetchDomains();
@@ -38,26 +43,60 @@ const Internships = () => {
         .select("domain_id")
         .eq("user_id", user.id);
       setAppliedIds((apps || []).map((a) => a.domain_id));
+
+      // Pre-fill from profile
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("full_name, email, phone, company")
+        .eq("user_id", user.id)
+        .single();
+      if (profile) {
+        setFormData({
+          full_name: profile.full_name || "",
+          email: profile.email || "",
+          phone: profile.phone || "",
+          college: profile.company || "",
+        });
+      }
     }
     setLoading(false);
   };
 
-  const handleApply = async (domainId: string) => {
+  const openApplyForm = (domain: Domain) => {
     if (!user) {
       navigate("/login");
       return;
     }
-    setApplying(domainId);
+    setSelectedDomain(domain);
+  };
+
+  const handleApply = async () => {
+    if (!user || !selectedDomain) return;
+    if (!formData.full_name || !formData.email) {
+      toast({ title: "Please fill in your name and email", variant: "destructive" });
+      return;
+    }
+    setApplying(selectedDomain.id);
+
+    // Update profile with form data
+    await supabase.from("profiles").update({
+      full_name: formData.full_name,
+      email: formData.email,
+      phone: formData.phone,
+      company: formData.college,
+    }).eq("user_id", user.id);
+
     const { error } = await supabase.from("internship_applications").insert({
       user_id: user.id,
-      domain_id: domainId,
+      domain_id: selectedDomain.id,
       status: "pending",
     });
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     } else {
       toast({ title: "Applied!", description: "Your application has been submitted for review." });
-      setAppliedIds((prev) => [...prev, domainId]);
+      setAppliedIds((prev) => [...prev, selectedDomain.id]);
+      setSelectedDomain(null);
     }
     setApplying(null);
   };
@@ -97,12 +136,8 @@ const Internships = () => {
                         <CheckCircle size={16} /> Applied
                       </Button>
                     ) : (
-                      <Button
-                        onClick={() => handleApply(domain.id)}
-                        disabled={applying === domain.id}
-                        className="w-full gap-2"
-                      >
-                        <BookOpen size={16} /> {applying === domain.id ? "Applying..." : "Apply Now"}
+                      <Button onClick={() => openApplyForm(domain)} className="w-full gap-2">
+                        <BookOpen size={16} /> Apply Now
                       </Button>
                     )}
                   </CardContent>
@@ -120,6 +155,39 @@ const Internships = () => {
           </div>
         )}
       </div>
+
+      {/* Application Form Dialog */}
+      <Dialog open={!!selectedDomain} onOpenChange={(open) => !open && setSelectedDomain(null)}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Apply for {selectedDomain?.title}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <p className="text-sm text-muted-foreground">
+              Duration: {selectedDomain?.duration_months} month(s) • {selectedDomain?.description || "No description"}
+            </p>
+            <div>
+              <Label>Full Name *</Label>
+              <Input value={formData.full_name} onChange={(e) => setFormData({ ...formData, full_name: e.target.value })} placeholder="Your full name" />
+            </div>
+            <div>
+              <Label>Email *</Label>
+              <Input type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="your@email.com" />
+            </div>
+            <div>
+              <Label>Phone</Label>
+              <Input value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} placeholder="+91 XXXXXXXXXX" />
+            </div>
+            <div>
+              <Label>College / Company</Label>
+              <Input value={formData.college} onChange={(e) => setFormData({ ...formData, college: e.target.value })} placeholder="Your institution" />
+            </div>
+            <Button onClick={handleApply} disabled={applying === selectedDomain?.id} className="w-full">
+              {applying === selectedDomain?.id ? "Submitting..." : "Submit Application"}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
