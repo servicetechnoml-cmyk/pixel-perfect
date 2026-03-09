@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
 import { Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -28,7 +29,19 @@ const Blog = () => {
         </motion.div>
 
         {isLoading ? (
-          <div className="text-center text-muted-foreground">Loading...</div>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="rounded-xl bg-card shadow-card overflow-hidden">
+                <Skeleton className="w-full h-48" />
+                <div className="p-6 space-y-3">
+                  <Skeleton className="h-3 w-24" />
+                  <Skeleton className="h-5 w-3/4" />
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-2/3" />
+                </div>
+              </div>
+            ))}
+          </div>
         ) : posts?.length === 0 ? (
           <div className="text-center text-muted-foreground">No blog posts yet. Check back soon!</div>
         ) : (

@@ -13,7 +13,17 @@ const AdminDashboard = () => {
   const { user, isAdmin, loading } = useAuth();
   const [tab, setTab] = useState("blog");
 
-  if (loading) return <div className="py-24 text-center text-muted-foreground">Loading...</div>;
+  if (loading) return (
+    <div className="py-24">
+      <div className="container mx-auto px-4 space-y-6">
+        <div className="h-8 w-48 bg-muted rounded animate-pulse" />
+        <div className="h-10 w-96 bg-muted rounded animate-pulse" />
+        <div className="grid md:grid-cols-2 gap-4">
+          {[1, 2, 3, 4].map((i) => (<div key={i} className="h-32 bg-muted rounded-xl animate-pulse" />))}
+        </div>
+      </div>
+    </div>
+  );
   if (!user || !isAdmin) return <Navigate to="/login" replace />;
 
   return (
