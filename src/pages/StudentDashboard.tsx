@@ -32,6 +32,7 @@ type Task = {
 type Submission = {
   id: string;
   task_id: string;
+  application_id: string;
   submission_url: string;
   status: string;
   feedback: string | null;
