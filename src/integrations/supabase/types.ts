@@ -122,6 +122,198 @@ export type Database = {
         }
         Relationships: []
       }
+      internship_applications: {
+        Row: {
+          created_at: string | null
+          domain_id: string
+          end_date: string | null
+          id: string
+          start_date: string | null
+          status: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          domain_id: string
+          end_date?: string | null
+          id?: string
+          start_date?: string | null
+          status?: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          domain_id?: string
+          end_date?: string | null
+          id?: string
+          start_date?: string | null
+          status?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "internship_applications_domain_id_fkey"
+            columns: ["domain_id"]
+            isOneToOne: false
+            referencedRelation: "internship_domains"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      internship_certificates: {
+        Row: {
+          application_id: string
+          created_at: string | null
+          domain_name: string
+          duration_text: string
+          id: string
+          issue_date: string | null
+          student_name: string
+          user_id: string
+        }
+        Insert: {
+          application_id: string
+          created_at?: string | null
+          domain_name: string
+          duration_text: string
+          id?: string
+          issue_date?: string | null
+          student_name: string
+          user_id: string
+        }
+        Update: {
+          application_id?: string
+          created_at?: string | null
+          domain_name?: string
+          duration_text?: string
+          id?: string
+          issue_date?: string | null
+          student_name?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "internship_certificates_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: true
+            referencedRelation: "internship_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      internship_domains: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          duration_months: number
+          id: string
+          is_active: boolean | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          duration_months?: number
+          id?: string
+          is_active?: boolean | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          duration_months?: number
+          id?: string
+          is_active?: boolean | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      internship_submissions: {
+        Row: {
+          application_id: string
+          feedback: string | null
+          id: string
+          status: string
+          submission_url: string
+          submitted_at: string | null
+          task_id: string
+        }
+        Insert: {
+          application_id: string
+          feedback?: string | null
+          id?: string
+          status?: string
+          submission_url: string
+          submitted_at?: string | null
+          task_id: string
+        }
+        Update: {
+          application_id?: string
+          feedback?: string | null
+          id?: string
+          status?: string
+          submission_url?: string
+          submitted_at?: string | null
+          task_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "internship_submissions_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "internship_applications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "internship_submissions_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "internship_tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      internship_tasks: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          domain_id: string
+          id: string
+          title: string
+          week_number: number
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          domain_id: string
+          id?: string
+          title: string
+          week_number: number
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          domain_id?: string
+          id?: string
+          title?: string
+          week_number?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "internship_tasks_domain_id_fkey"
+            columns: ["domain_id"]
+            isOneToOne: false
+            referencedRelation: "internship_domains"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           company: string | null
