@@ -188,18 +188,19 @@ const Index = () => {
       </section>
 
       {/* Industries */}
-      <section className="py-24 bg-secondary/50">
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
-            <motion.h2 variants={fadeUp} custom={0} className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">Industries We Serve</motion.h2>
+            <motion.h2 variants={fadeUp} custom={0} className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">Industries We Serve</motion.h2>
+            <motion.p variants={fadeUp} custom={1} className="text-muted-foreground text-lg">Trusted across diverse sectors globally</motion.p>
           </motion.div>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {industries.map((ind) => (
-              <motion.div key={ind.name} variants={scaleIn} className="group flex flex-col items-center gap-3 rounded-xl bg-card p-6 shadow-card hover:shadow-elevated transition-all duration-300 hover:-translate-y-2">
-                <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 group-hover:scale-110 transition-all duration-300">
-                  <ind.icon className="text-accent" size={28} />
+              <motion.div key={ind.name} variants={scaleIn} className="group flex flex-col items-center gap-3 rounded-2xl bg-gradient-to-br from-card to-primary/5 p-6 shadow-card hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 border border-primary/10 hover:border-primary/30">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center group-hover:scale-125 transition-transform duration-300">
+                  <ind.icon className="text-primary" size={30} />
                 </div>
-                <span className="font-display font-medium text-sm text-foreground">{ind.name}</span>
+                <span className="font-display font-bold text-sm text-foreground text-center">{ind.name}</span>
               </motion.div>
             ))}
           </motion.div>
