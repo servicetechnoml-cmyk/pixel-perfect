@@ -111,12 +111,12 @@ const HeroScene = () => {
       >
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
-        <pointLight position={[-3, 2, 2]} intensity={0.8} color="#4d8df7" />
-        <pointLight position={[3, -2, -2]} intensity={0.5} color="#38bdf8" />
+        <pointLight position={[-3, 2, 2]} intensity={0.8} color="#a855f7" />
+        <pointLight position={[3, -2, -2]} intensity={0.5} color="#c084fc" />
 
-        <FloatingOrb position={[-2.5, 0.5, 0]} color="#4d8df7" speed={0.8} />
-        <FloatingOrb position={[2.8, -0.3, -1]} color="#38bdf8" speed={1.2} />
-        <FloatingOrb position={[0.5, 1.5, -2]} color="#6366f1" speed={0.6} />
+        <FloatingOrb position={[-2.5, 0.5, 0]} color="#a855f7" speed={0.8} />
+        <FloatingOrb position={[2.8, -0.3, -1]} color="#c084fc" speed={1.2} />
+        <FloatingOrb position={[0.5, 1.5, -2]} color="#e879f9" speed={0.6} />
 
         <ParticleField />
         <NeuralConnections />

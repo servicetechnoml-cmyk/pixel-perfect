@@ -230,22 +230,22 @@ const Index = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-hero text-primary-foreground relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-accent blur-[100px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full bg-accent/70 blur-[80px]" />
+      <section className="py-24 bg-gradient-to-br from-primary via-purple-600 to-primary text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-white blur-[120px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-72 h-72 rounded-full bg-purple-300 blur-[100px]" />
         </div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
-            <motion.h2 variants={fadeUp} custom={0} className="font-display text-3xl md:text-5xl font-bold mb-4">
+            <motion.h2 variants={fadeUp} custom={0} className="font-display text-4xl md:text-6xl font-bold mb-6">
               Ready to Automate and Scale?
             </motion.h2>
-            <motion.p variants={fadeUp} custom={1} className="text-primary-foreground/70 max-w-xl mx-auto mb-8 text-lg">
+            <motion.p variants={fadeUp} custom={1} className="text-white/90 max-w-2xl mx-auto mb-10 text-xl">
               Let's build something powerful together. Get a custom proposal tailored to your business needs.
             </motion.p>
             <motion.div variants={fadeUp} custom={2}>
-              <Link to="/contact" className="group inline-flex items-center gap-2 rounded-xl bg-accent px-8 py-4 text-lg font-semibold text-accent-foreground transition-all hover:shadow-lg hover:shadow-accent/25 hover:scale-105">
-                Request a Quote Now <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              <Link to="/contact" className="group inline-flex items-center gap-2 rounded-xl bg-white px-10 py-5 text-xl font-bold text-primary transition-all hover:shadow-2xl hover:scale-105">
+                Request a Quote Now <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>
           </motion.div>
