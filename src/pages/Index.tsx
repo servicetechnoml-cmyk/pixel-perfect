@@ -95,19 +95,19 @@ const Index = () => {
       </section>
 
       {/* Stats Bar */}
-      <section className="relative z-20 -mt-16">
+      <section className="relative z-20 py-12">
         <div className="container mx-auto px-4">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 rounded-2xl bg-card p-6 md:p-8 shadow-elevated"
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 p-8 md:p-10 shadow-elevated border border-primary/20"
           >
             {stats.map((s) => (
               <motion.div key={s.label} variants={scaleIn} className="text-center">
-                <p className="font-display text-2xl md:text-3xl font-bold text-accent">{s.value}</p>
-                <p className="text-xs md:text-sm text-muted-foreground mt-1">{s.label}</p>
+                <p className="font-display text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">{s.value}</p>
+                <p className="text-sm md:text-base text-muted-foreground mt-2 font-medium">{s.label}</p>
               </motion.div>
             ))}
           </motion.div>
