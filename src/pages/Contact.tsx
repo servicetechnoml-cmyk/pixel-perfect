@@ -49,35 +49,30 @@ const Contact = () => {
         <div className="container mx-auto px-4">
           <div className="grid gap-12 lg:grid-cols-3 max-w-5xl mx-auto">
             {/* Contact Info */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="space-y-6">
               <motion.h2 variants={fadeUp} custom={0} className="font-display text-2xl font-bold text-foreground">
                 Contact Information
               </motion.h2>
-              <motion.div variants={fadeUp} custom={1} className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-                  <Mail className="text-accent" size={20} />
-                </div>
-                <div>
-                  <p className="font-medium text-foreground text-sm">Email</p>
-                  <a href="mailto:service@technoml.in" className="text-sm text-muted-foreground hover:text-accent transition-colors">
-                    service@technoml.in
-                  </a>
-                </div>
-              </motion.div>
-              <motion.div variants={fadeUp} custom={2} className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-                  <MapPin className="text-accent" size={20} />
-                </div>
-                <div>
-                  <p className="font-medium text-foreground text-sm">Location</p>
-                  <p className="text-sm text-muted-foreground">India</p>
-                </div>
-              </motion.div>
+              {[
+                { icon: Mail, label: "Email", value: "service@technoml.in", href: "mailto:service@technoml.in" },
+                { icon: Phone, label: "Phone", value: "+91 98765 43210", href: "tel:+919876543210" },
+                { icon: MapPin, label: "Location", value: "India (Serving Globally)" },
+                { icon: Clock, label: "Response Time", value: "Within 24 hours" },
+              ].map((c, i) => (
+                <motion.div key={c.label} variants={fadeUp} custom={i + 1} className="flex items-start gap-4 p-4 rounded-xl bg-card shadow-card border border-primary/10">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center shrink-0">
+                    <c.icon className="text-primary" size={22} />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground text-sm">{c.label}</p>
+                    {c.href ? (
+                      <a href={c.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">{c.value}</a>
+                    ) : (
+                      <p className="text-sm text-muted-foreground">{c.value}</p>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
 
             {/* Form */}
