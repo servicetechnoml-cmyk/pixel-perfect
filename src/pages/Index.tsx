@@ -115,24 +115,24 @@ const Index = () => {
       </section>
 
       {/* Why TechnoML */}
-      <section className="py-24 bg-glow">
+      <section className="py-24 bg-gradient-to-b from-background via-primary/5 to-background">
         <div className="container mx-auto px-4">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
-            <motion.h2 variants={fadeUp} custom={0} className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Why <span className="text-gradient">TechnoML</span>?
+            <motion.h2 variants={fadeUp} custom={0} className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
+              Why <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">TechnoML</span>?
             </motion.h2>
-            <motion.p variants={fadeUp} custom={1} className="text-muted-foreground max-w-2xl mx-auto">
+            <motion.p variants={fadeUp} custom={1} className="text-muted-foreground max-w-2xl mx-auto text-lg">
               We combine deep AI expertise with world-class software engineering to deliver solutions that matter.
             </motion.p>
           </motion.div>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {whyUs.map((item) => (
-              <motion.div key={item.title} variants={scaleIn} className="group rounded-xl bg-card p-6 shadow-card hover:shadow-elevated transition-all duration-300 hover:-translate-y-2">
-                <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mb-4 group-hover:bg-accent/20 group-hover:scale-110 transition-all duration-300">
-                  <item.icon className="text-accent" size={24} />
+            {whyUs.map((item, i) => (
+              <motion.div key={item.title} variants={scaleIn} className="group rounded-2xl bg-card p-8 shadow-card hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 border border-transparent hover:border-primary/20">
+                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
+                  <item.icon className="text-primary" size={28} />
                 </div>
-                <h3 className="font-display font-semibold text-foreground mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.desc}</p>
+                <h3 className="font-display text-lg font-bold text-foreground mb-3">{item.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </motion.div>
