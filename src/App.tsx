@@ -20,6 +20,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import Internships from "./pages/Internships";
 import StudentDashboard from "./pages/StudentDashboard";
 import VerifyCertificate from "./pages/VerifyCertificate";
+import CertificatePage from "./pages/CertificatePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
