@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Send } from "lucide-react";
+import { Mail, MapPin, Send, Phone, Clock } from "lucide-react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
