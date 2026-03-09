@@ -113,7 +113,16 @@ const Internships = () => {
         </div>
 
         {loading ? (
-          <p className="text-center text-muted-foreground">Loading programs...</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="rounded-xl border border-border bg-card p-6 space-y-3">
+                <div className="flex justify-between"><Skeleton className="h-5 w-1/2" /><Skeleton className="h-5 w-20 rounded-full" /></div>
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-2/3" />
+                <Skeleton className="h-10 w-full rounded-md" />
+              </div>
+            ))}
+          </div>
         ) : domains.length === 0 ? (
           <p className="text-center text-muted-foreground">No internship programs available at the moment.</p>
         ) : (
