@@ -84,7 +84,7 @@ const Header = () => {
             </button>
             {internshipOpen && (
               <div className="absolute top-full mt-2 right-0 w-52 bg-popover border border-border rounded-lg shadow-lg py-1 z-50">
-                {internshipSubMenu.map((item) => (
+                {getInternshipSubMenu(!!user).map((item) => (
                   <Link
                     key={item.path}
                     to={item.path}
