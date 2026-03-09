@@ -171,14 +171,15 @@ const Index = () => {
       </section>
 
       {/* Tech Stack */}
-      <section className="py-24">
+      <section className="py-24 bg-gradient-to-b from-background via-primary/5 to-background">
         <div className="container mx-auto px-4">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-12">
-            <motion.h2 variants={fadeUp} custom={0} className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">Our Tech Stack</motion.h2>
+            <motion.h2 variants={fadeUp} custom={0} className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">Our Tech Stack</motion.h2>
+            <motion.p variants={fadeUp} custom={1} className="text-muted-foreground text-lg">Industry-leading tools and frameworks we master</motion.p>
           </motion.div>
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
             {techStack.map((tech) => (
-              <motion.span key={tech} variants={scaleIn} className="rounded-full border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground shadow-card hover:shadow-elevated hover:border-accent/50 hover:scale-105 transition-all duration-200 cursor-default">
+              <motion.span key={tech} variants={scaleIn} className="rounded-full border-2 border-primary/20 bg-gradient-to-r from-primary/5 to-purple-600/5 px-6 py-2.5 text-sm font-semibold text-foreground shadow-card hover:border-primary/50 hover:shadow-primary/10 hover:shadow-lg hover:scale-110 transition-all duration-200 cursor-default">
                 {tech}
               </motion.span>
             ))}
