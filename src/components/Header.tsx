@@ -15,11 +15,16 @@ const navItems = [
   { label: "Contact", path: "/contact" },
 ];
 
-const internshipSubMenu = [
-  { label: "Programs", path: "/internships", icon: BookOpen },
-  { label: "My Dashboard", path: "/student-dashboard", icon: GraduationCap },
-  { label: "Verify Certificate", path: "/verify-certificate", icon: ShieldCheck },
-];
+const getInternshipSubMenu = (isLoggedIn: boolean) => {
+  const items = [
+    { label: "Programs", path: "/internships", icon: BookOpen },
+    { label: "Verify Certificate", path: "/verify-certificate", icon: ShieldCheck },
+  ];
+  if (isLoggedIn) {
+    items.splice(1, 0, { label: "My Dashboard", path: "/student-dashboard", icon: GraduationCap });
+  }
+  return items;
+};
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -79,7 +84,7 @@ const Header = () => {
             </button>
             {internshipOpen && (
               <div className="absolute top-full mt-2 right-0 w-52 bg-popover border border-border rounded-lg shadow-lg py-1 z-50">
-                {internshipSubMenu.map((item) => (
+                {getInternshipSubMenu(!!user).map((item) => (
                   <Link
                     key={item.path}
                     to={item.path}
@@ -135,7 +140,7 @@ const Header = () => {
           ))}
           <div className="border-t border-border my-2 pt-2">
             <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1 px-1">Internships</p>
-            {internshipSubMenu.map((item) => (
+            {getInternshipSubMenu(!!user).map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
