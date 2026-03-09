@@ -140,31 +140,31 @@ const Index = () => {
       </section>
 
       {/* Services Overview */}
-      <section className="py-24 bg-secondary/50">
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
-            <motion.h2 variants={fadeUp} custom={0} className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">What We Do</motion.h2>
-            <motion.p variants={fadeUp} custom={1} className="text-muted-foreground max-w-2xl mx-auto">
+            <motion.h2 variants={fadeUp} custom={0} className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">What We Do</motion.h2>
+            <motion.p variants={fadeUp} custom={1} className="text-muted-foreground max-w-2xl mx-auto text-lg">
               End-to-end technology solutions from AI automation to cloud deployment.
             </motion.p>
           </motion.div>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {services.map((s) => (
-              <motion.div key={s.title} variants={scaleIn} className="group relative rounded-xl bg-card p-8 shadow-card hover:shadow-elevated transition-all duration-300 hover:-translate-y-2 overflow-hidden">
+            {services.map((s, i) => (
+              <motion.div key={s.title} variants={scaleIn} className="group relative rounded-2xl bg-gradient-to-br from-card to-primary/5 p-8 shadow-card hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 overflow-hidden border border-primary/10 hover:border-primary/30">
                 <div className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                 <div className="relative z-10">
-                  <div className="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mb-5 group-hover:bg-accent/20 group-hover:rotate-6 transition-all duration-300">
-                    <s.icon className="text-accent" size={28} />
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                    <s.icon className="text-primary" size={32} />
                   </div>
-                  <h3 className="font-display text-lg font-semibold text-foreground mb-2">{s.title}</h3>
+                  <h3 className="font-display text-xl font-bold text-foreground mb-3">{s.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
                 </div>
               </motion.div>
             ))}
           </motion.div>
           <div className="text-center mt-12">
-            <Link to="/services" className="group inline-flex items-center gap-2 text-accent font-semibold hover:underline">
-              View All Services <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            <Link to="/services" className="group inline-flex items-center gap-2 text-primary font-bold text-lg hover:underline">
+              View All Services <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
