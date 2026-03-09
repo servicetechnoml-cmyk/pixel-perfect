@@ -17,6 +17,9 @@ import Projects from "./pages/Projects";
 import Certifications from "./pages/Certifications";
 import History from "./pages/History";
 import AdminDashboard from "./pages/AdminDashboard";
+import Internships from "./pages/Internships";
+import StudentDashboard from "./pages/StudentDashboard";
+import VerifyCertificate from "./pages/VerifyCertificate";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,6 +44,9 @@ const App = () => (
               <Route path="/projects" element={<Projects />} />
               <Route path="/certifications" element={<Certifications />} />
               <Route path="/history" element={<History />} />
+              <Route path="/internships" element={<Internships />} />
+              <Route path="/student-dashboard" element={<StudentDashboard />} />
+              <Route path="/verify-certificate" element={<VerifyCertificate />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
