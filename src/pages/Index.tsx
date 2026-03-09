@@ -67,33 +67,31 @@ const Index = () => {
       <section className="relative min-h-screen flex items-center overflow-hidden bg-hero">
         <HeroScene />
         <div className="container mx-auto px-4 relative z-10">
-          <motion.div initial="hidden" animate="visible" className="max-w-3xl">
-            <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 mb-6">
+          <motion.div initial="hidden" animate="visible" className="max-w-3xl mx-auto text-center">
+            <motion.div variants={fadeUp} custom={0} className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm px-4 py-1.5 mb-6">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
               </span>
-              <span className="text-accent text-xs font-semibold tracking-wide uppercase">AI Automation & Software Engineering</span>
+              <span className="text-white text-xs font-semibold tracking-wide uppercase">AI Automation & Software Engineering</span>
             </motion.div>
-            <motion.h1 variants={fadeUp} custom={1} className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground leading-[1.1] mb-6">
-              Transforming Businesses with{" "}
-              <span className="text-gradient">AI Automation</span> & Scalable Solutions
+            <motion.h1 variants={fadeUp} custom={1} className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-6">
+              Build Your IT Here
             </motion.h1>
-            <motion.p variants={fadeUp} custom={2} className="text-lg md:text-xl text-primary-foreground/70 max-w-2xl mb-8 leading-relaxed">
-              TechnoML helps startups and enterprises automate workflows, build intelligent systems, and develop powerful web & mobile applications that drive growth.
+            <motion.p variants={fadeUp} custom={2} className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-8 leading-relaxed">
+              You Have A Vision. We Have A Team To Get You There
             </motion.p>
-            <motion.div variants={fadeUp} custom={3} className="flex flex-wrap gap-4">
-              <Link to="/contact" className="group inline-flex items-center gap-2 rounded-xl bg-accent px-7 py-3.5 font-semibold text-accent-foreground transition-all hover:shadow-lg hover:shadow-accent/25 hover:scale-105">
-                Request a Quote <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            <motion.div variants={fadeUp} custom={3} className="flex flex-wrap gap-4 justify-center">
+              <Link to="/contact" className="group inline-flex items-center gap-2 rounded-xl bg-white px-8 py-4 text-lg font-semibold text-primary transition-all hover:shadow-2xl hover:scale-105">
+                Get Started <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link to="/services" className="inline-flex items-center gap-2 rounded-xl border border-primary-foreground/20 backdrop-blur-sm px-7 py-3.5 font-semibold text-primary-foreground transition-all hover:bg-primary-foreground/10 hover:border-primary-foreground/40">
+              <Link to="/services" className="inline-flex items-center gap-2 rounded-xl border-2 border-white/30 backdrop-blur-sm px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-white/10 hover:border-white/50">
                 Explore Services
               </Link>
             </motion.div>
           </motion.div>
         </div>
-        {/* Gradient overlay at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-10" />
+        <WaveBottom className="z-20" />
       </section>
 
       {/* Stats Bar */}
