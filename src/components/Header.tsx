@@ -15,11 +15,16 @@ const navItems = [
   { label: "Contact", path: "/contact" },
 ];
 
-const internshipSubMenu = [
-  { label: "Programs", path: "/internships", icon: BookOpen },
-  { label: "My Dashboard", path: "/student-dashboard", icon: GraduationCap },
-  { label: "Verify Certificate", path: "/verify-certificate", icon: ShieldCheck },
-];
+const getInternshipSubMenu = (isLoggedIn: boolean) => {
+  const items = [
+    { label: "Programs", path: "/internships", icon: BookOpen },
+    { label: "Verify Certificate", path: "/verify-certificate", icon: ShieldCheck },
+  ];
+  if (isLoggedIn) {
+    items.splice(1, 0, { label: "My Dashboard", path: "/student-dashboard", icon: GraduationCap });
+  }
+  return items;
+};
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
