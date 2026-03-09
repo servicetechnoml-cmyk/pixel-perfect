@@ -78,21 +78,26 @@ const sections = [
 const Services = () => (
   <div>
     {/* Hero */}
-    <section className="py-24 bg-hero text-primary-foreground">
-      <div className="container mx-auto px-4 text-center">
+    <section className="py-32 bg-gradient-to-br from-primary via-purple-600 to-primary text-white relative overflow-hidden">
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-0 left-1/3 w-96 h-96 rounded-full bg-white blur-[120px]" />
+        <div className="absolute bottom-0 right-1/3 w-64 h-64 rounded-full bg-purple-200 blur-[80px]" />
+      </div>
+      <div className="container mx-auto px-4 text-center relative z-10">
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-white/70 text-sm font-semibold uppercase tracking-widest mb-4">What We Offer</motion.p>
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="font-display text-4xl md:text-5xl font-bold mb-4"
+          className="font-display text-5xl md:text-6xl font-bold mb-6"
         >
           Our Services
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0, transition: { delay: 0.1 } }}
-          className="text-primary-foreground/70 max-w-2xl mx-auto text-lg"
+          animate={{ opacity: 1, y: 0, transition: { delay: 0.2 } }}
+          className="text-white/80 max-w-2xl mx-auto text-xl leading-relaxed"
         >
-          End-to-end technology solutions from AI automation to cloud deployment
+          End-to-end technology solutions — from AI automation to cloud deployment — built for scale.
         </motion.p>
       </div>
     </section>
