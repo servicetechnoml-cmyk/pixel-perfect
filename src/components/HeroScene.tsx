@@ -49,7 +49,7 @@ const FloatingOrb = ({ position, color, speed }: { position: [number, number, nu
     <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
       <mesh ref={ref} position={position}>
         <icosahedronGeometry args={[0.6, 4]} />
-        <MeshDistortMaterial color={color} distort={0.4} speed={2} roughness={0.2} metalness={0.8} />
+        <MeshDistortMaterial color={color} distort={0.4} speed={2} roughness={0.1} metalness={0.9} />
       </mesh>
     </Float>
   );
