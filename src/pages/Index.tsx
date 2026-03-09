@@ -3,9 +3,10 @@ import { motion } from "framer-motion";
 import {
   Bot, Code, Globe, Smartphone, Cloud, Headphones,
   Cpu, Building2, ShoppingCart, GraduationCap, Heart, Factory, Rocket,
-  ArrowRight, Zap, Shield, Users, CheckCircle, TrendingUp
+  ArrowRight, Zap, Shield, Users
 } from "lucide-react";
 import HeroScene from "@/components/HeroScene";
+import WaveBottom from "@/components/WaveBottom";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
