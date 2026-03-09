@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Target, Eye, Lightbulb, Shield, Star, Users, Heart } from "lucide-react";
+import { Target, Eye, Lightbulb, Shield, Star, Users, Heart, Award, Globe, Code2 } from "lucide-react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
