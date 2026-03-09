@@ -149,15 +149,15 @@ const Services = () => (
     </section>
 
     {/* CTA */}
-    <section className="py-24 bg-secondary/50">
+    <section className="py-24 bg-gradient-to-br from-primary/5 to-purple-600/5">
       <div className="container mx-auto px-4 text-center">
-        <h2 className="font-display text-3xl font-bold text-foreground mb-4">Need a Custom Solution?</h2>
-        <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-          Tell us about your project and we'll provide a tailored proposal.
+        <h2 className="font-display text-4xl font-bold text-foreground mb-4">Need a Custom Solution?</h2>
+        <p className="text-muted-foreground mb-8 max-w-xl mx-auto text-lg">
+          Tell us about your project and we'll provide a tailored proposal within 24 hours.
         </p>
         <Link
           to="/contact"
-          className="inline-flex items-center gap-2 rounded-lg bg-accent px-8 py-4 font-semibold text-accent-foreground hover:opacity-90 transition-all"
+          className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary to-purple-600 text-white px-10 py-4 text-lg font-bold hover:shadow-2xl hover:shadow-primary/25 hover:scale-105 transition-all duration-200"
         >
           Request a Quote <ArrowRight size={20} />
         </Link>

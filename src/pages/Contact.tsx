@@ -166,9 +166,9 @@ const Contact = () => {
                     />
                   </motion.div>
                   <motion.div variants={fadeUp} custom={7}>
-                    <button
+                  <button
                       type="submit"
-                      className="w-full rounded-lg bg-accent px-6 py-3 font-semibold text-accent-foreground transition-all hover:opacity-90 flex items-center justify-center gap-2"
+                      className="w-full rounded-xl bg-gradient-to-r from-primary to-purple-600 text-white px-6 py-3.5 font-bold hover:shadow-lg hover:shadow-primary/25 hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
                     >
                       Send Message <Send size={18} />
                     </button>

@@ -207,23 +207,24 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Testimonial / Trust */}
-      <section className="py-24">
+      {/* Testimonials */}
+      <section className="py-24 bg-gradient-to-b from-background via-primary/5 to-background">
         <div className="container mx-auto px-4">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="max-w-4xl mx-auto">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="max-w-5xl mx-auto">
             <motion.div variants={fadeUp} custom={0} className="text-center mb-12">
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">Trusted by Industry Leaders</h2>
+              <p className="text-primary font-semibold uppercase tracking-widest text-sm mb-3">Testimonials</p>
+              <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">Trusted by Industry Leaders</h2>
             </motion.div>
             <motion.div variants={fadeUp} custom={1} className="grid gap-6 md:grid-cols-3">
               {[
-                { quote: "TechnoML transformed our manual processes into fully automated workflows. We saved 200+ hours per month.", author: "CEO, FinTech Startup" },
-                { quote: "Their AI-powered fraud detection system reduced our false positives by 85%. Incredible engineering team.", author: "CTO, Digital Bank" },
-                { quote: "From concept to production in 8 weeks. TechnoML delivered our mobile app ahead of schedule with exceptional quality.", author: "Founder, EdTech Platform" },
+                { quote: "TechnoML transformed our manual processes into fully automated workflows. We saved 200+ hours per month.", author: "CEO, FinTech Startup", stars: 5 },
+                { quote: "Their AI-powered fraud detection system reduced our false positives by 85%. Incredible engineering team.", author: "CTO, Digital Bank", stars: 5 },
+                { quote: "From concept to production in 8 weeks. TechnoML delivered our mobile app ahead of schedule with exceptional quality.", author: "Founder, EdTech Platform", stars: 5 },
               ].map((t, i) => (
-                <motion.div key={i} variants={scaleIn} className="rounded-xl bg-card p-6 shadow-card">
-                  <div className="flex gap-1 mb-4">{[...Array(5)].map((_, j) => <span key={j} className="text-accent">★</span>)}</div>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-4 italic">"{t.quote}"</p>
-                  <p className="text-xs font-semibold text-foreground">— {t.author}</p>
+                <motion.div key={i} variants={scaleIn} className="rounded-2xl bg-card p-8 shadow-card border border-primary/10 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300">
+                  <div className="flex gap-1 mb-4">{[...Array(t.stars)].map((_, j) => <span key={j} className="text-yellow-400 text-lg">★</span>)}</div>
+                  <p className="text-muted-foreground leading-relaxed mb-6 italic text-sm">"{t.quote}"</p>
+                  <p className="text-xs font-bold text-foreground">— {t.author}</p>
                 </motion.div>
               ))}
             </motion.div>
