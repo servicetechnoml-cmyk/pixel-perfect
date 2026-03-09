@@ -88,7 +88,7 @@ const NeuralConnections = () => {
       {nodes.map((node, i) => (
         <mesh key={i} position={node.pos}>
           <sphereGeometry args={[0.04, 8, 8]} />
-          <meshBasicMaterial color="#4d8df7" />
+          <meshBasicMaterial color="#a855f7" />
         </mesh>
       ))}
       {lines.map((line, i) => {
