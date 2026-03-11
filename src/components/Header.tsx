@@ -46,7 +46,9 @@ const Header = () => {
 
   const handleSignOut = async () => {
     await signOut();
-    navigate("/");
+    setMobileOpen(false);
+    setInternshipOpen(false);
+    navigate("/login");
   };
 
   const isInternshipRoute = ["/internships", "/student-dashboard", "/verify-certificate"].includes(location.pathname);
