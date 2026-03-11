@@ -15,13 +15,26 @@ const Login = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) {
       toast.error(error.message);
     } else {
       toast.success("Logged in successfully!");
-      navigate("/");
+      // Check if user is admin and redirect accordingly
+      if (data.user) {
+        const { data: roleData } = await supabase.rpc("has_role", {
+          _user_id: data.user.id,
+          _role: "admin" as const,
+        });
+        if (roleData) {
+          navigate("/admin");
+        } else {
+          navigate("/student-dashboard");
+        }
+      } else {
+        navigate("/");
+      }
     }
   };
 
