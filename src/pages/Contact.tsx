@@ -54,7 +54,7 @@ const Contact = () => {
                 Contact Information
               </motion.h2>
               {[
-                { icon: Mail, label: "Email", value: "service@technoml.in", href: "mailto:service@technoml.in" },
+                { icon: Mail, label: "Email", value: "service@rsverse.in", href: "mailto:service@rsverse.in" },
                 { icon: Phone, label: "Phone", value: "+91 98765 43210", href: "tel:+919876543210" },
                 { icon: MapPin, label: "Location", value: "India (Serving Globally)" },
                 { icon: Clock, label: "Response Time", value: "Within 24 hours" },
