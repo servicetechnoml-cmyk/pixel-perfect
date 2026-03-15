@@ -51,8 +51,8 @@ const Footer = () => (
         <div>
           <h4 className="font-display font-semibold mb-4">Contact</h4>
           <div className="flex flex-col gap-3 text-sm text-primary-foreground/70">
-            <a href="mailto:service@technoml.in" className="flex items-center gap-2 hover:text-primary-foreground transition-colors">
-              <Mail size={16} /> service@technoml.in
+            <a href="mailto:service@rsverse.in" className="flex items-center gap-2 hover:text-primary-foreground transition-colors">
+              <Mail size={16} /> service@rsverse.in
             </a>
             <span className="flex items-center gap-2">
               <MapPin size={16} /> India
