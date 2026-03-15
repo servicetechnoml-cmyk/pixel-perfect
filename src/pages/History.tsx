@@ -24,7 +24,7 @@ const History = () => {
       <div className="container mx-auto px-4">
         <motion.div initial="hidden" animate="visible" className="text-center mb-16">
           <motion.h1 variants={fadeUp} custom={0} className="font-display text-4xl font-bold text-foreground mb-4">Our Journey</motion.h1>
-          <motion.p variants={fadeUp} custom={1} className="text-muted-foreground max-w-2xl mx-auto">Key milestones in the TechnoML story.</motion.p>
+          <motion.p variants={fadeUp} custom={1} className="text-muted-foreground max-w-2xl mx-auto">Key milestones in the RSverse story.</motion.p>
         </motion.div>
         {isLoading ? (
           <div className="max-w-2xl mx-auto space-y-8">
