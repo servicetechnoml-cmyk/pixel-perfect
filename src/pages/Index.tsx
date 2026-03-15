@@ -119,7 +119,7 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
             <motion.h2 variants={fadeUp} custom={0} className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Why <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">TechnoML</span>?
+              Why <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">RSverse</span>?
             </motion.h2>
             <motion.p variants={fadeUp} custom={1} className="text-muted-foreground max-w-2xl mx-auto text-lg">
               We combine deep AI expertise with world-class software engineering to deliver solutions that matter.
