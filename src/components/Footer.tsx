@@ -62,7 +62,7 @@ const Footer = () => (
       </div>
 
       <div className="mt-12 pt-8 border-t border-primary-foreground/10 text-center text-sm text-primary-foreground/50">
-        © {new Date().getFullYear()} TechnoML. All rights reserved.
+        © {new Date().getFullYear()} RSverse. All rights reserved.
       </div>
     </div>
   </footer>

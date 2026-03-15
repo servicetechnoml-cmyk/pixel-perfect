@@ -57,8 +57,8 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border shadow-sm">
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="TechnoML" className="h-10 w-10" />
-          <span className="font-display text-xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">TechnoML</span>
+          <img src={logo} alt="RSverse" className="h-10 w-10" />
+          <span className="font-display text-xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">RSverse</span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-5">
