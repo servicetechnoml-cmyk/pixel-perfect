@@ -217,9 +217,9 @@ const Index = () => {
             </motion.div>
             <motion.div variants={fadeUp} custom={1} className="grid gap-6 md:grid-cols-3">
               {[
-                { quote: "TechnoML transformed our manual processes into fully automated workflows. We saved 200+ hours per month.", author: "CEO, FinTech Startup", stars: 5 },
+                { quote: "RSverse transformed our manual processes into fully automated workflows. We saved 200+ hours per month.", author: "CEO, FinTech Startup", stars: 5 },
                 { quote: "Their AI-powered fraud detection system reduced our false positives by 85%. Incredible engineering team.", author: "CTO, Digital Bank", stars: 5 },
-                { quote: "From concept to production in 8 weeks. TechnoML delivered our mobile app ahead of schedule with exceptional quality.", author: "Founder, EdTech Platform", stars: 5 },
+                { quote: "From concept to production in 8 weeks. RSverse delivered our mobile app ahead of schedule with exceptional quality.", author: "Founder, EdTech Platform", stars: 5 },
               ].map((t, i) => (
                 <motion.div key={i} variants={scaleIn} className="rounded-2xl bg-card p-8 shadow-card border border-primary/10 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300">
                   <div className="flex gap-1 mb-4">{[...Array(t.stars)].map((_, j) => <span key={j} className="text-yellow-400 text-lg">★</span>)}</div>

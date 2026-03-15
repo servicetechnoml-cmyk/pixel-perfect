@@ -80,7 +80,7 @@ const About = () => (
               Built for the Future of Business
             </motion.h2>
             <motion.p variants={fadeUp} custom={2} className="text-muted-foreground leading-relaxed text-lg mb-4">
-              TechnoML was founded in 2022 with a singular vision: to make AI and intelligent automation accessible to every business, regardless of size. We believed that the future belongs to companies that can move faster, think smarter, and operate leaner.
+              RSverse was founded in 2022 with a singular vision: to make AI and intelligent automation accessible to every business, regardless of size. We believed that the future belongs to companies that can move faster, think smarter, and operate leaner.
             </motion.p>
             <motion.p variants={fadeUp} custom={3} className="text-muted-foreground leading-relaxed text-lg">
               Today, we serve 100+ clients across 15+ countries, helping startups scale from zero to millions and enterprises automate complex workflows that save thousands of man-hours every year.
