@@ -8,8 +8,8 @@ const Footer = () => (
       <div className="grid gap-10 md:grid-cols-4">
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <img src={logo} alt="TechnoML" className="h-10 w-10" />
-            <span className="font-display text-xl font-bold">TechnoML</span>
+            <img src={logo} alt="RSverse" className="h-10 w-10" />
+            <span className="font-display text-xl font-bold">RSverse</span>
           </div>
           <p className="text-sm text-primary-foreground/70 leading-relaxed">
             AI Automation & Custom Software Engineering Company helping businesses grow smarter.
