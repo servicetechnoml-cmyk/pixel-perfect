@@ -33,7 +33,7 @@ const Register = () => {
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success("Registration successful! Please check your email to verify your account.");
+      toast.success("Registration successful! Your account is pending admin approval.");
       navigate("/login");
     }
   };
