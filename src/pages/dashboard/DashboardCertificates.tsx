@@ -65,7 +65,7 @@ const DashboardCertificates = () => {
             <div key={cert.id} className="rounded-xl bg-card border border-border/50 shadow-sm overflow-hidden">
               <div className="flex flex-col sm:flex-row">
                 {/* Left Badge Panel */}
-                <div className="w-full sm:w-1/3 flex flex-col items-center justify-center p-6 bg-gradient-to-br from-primary to-purple-600 text-white">
+                <div className="w-full sm:w-1/3 flex flex-col items-center justify-center p-6 bg-gradient-to-br from-primary to-accent text-white">
                   <Award className="h-14 w-14 mb-2" />
                   <span className="font-bold text-[10px] tracking-[0.2em] uppercase opacity-80">Earned</span>
                 </div>

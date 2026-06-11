@@ -39,7 +39,7 @@ const DashboardSupport = () => {
       <div className="rounded-xl bg-card border border-border/50 shadow-sm overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Left Info Panel */}
-          <div className="bg-gradient-to-br from-primary to-purple-600 p-7 text-white">
+          <div className="bg-gradient-to-br from-primary to-accent p-7 text-white">
             <h2 className="text-lg font-bold mb-3 font-display">Contact Support</h2>
             <p className="text-white/80 text-sm mb-6 max-w-sm leading-relaxed">
               Need direct assistance? Send us a message and our team will get back to you within 24 hours.

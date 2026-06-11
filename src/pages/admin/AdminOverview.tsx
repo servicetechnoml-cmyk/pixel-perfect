@@ -144,7 +144,7 @@ const AdminOverview = () => {
       label: "Total Students",
       value: totalStudents,
       icon: Users,
-      color: "from-blue-500/20 to-indigo-500/20 text-blue-600 dark:text-blue-400 border-blue-500/25",
+      color: "from-primary to-primary text-primary dark:text-primary border-primary",
       trend: "+12% overall",
       description: "Registered learners"
     },
@@ -160,7 +160,7 @@ const AdminOverview = () => {
       label: "Certificates Issued",
       value: certificatesCount,
       icon: Award,
-      color: "from-purple-500/20 to-pink-500/20 text-purple-600 dark:text-purple-400 border-purple-500/25",
+      color: "from-accent to-accent text-accent dark:text-accent border-accent",
       trend: "Verifiable credentials",
       description: "Successfully completed"
     },
@@ -180,14 +180,14 @@ const AdminOverview = () => {
       desc: "Manually onboard a new intern profile",
       href: "/dashboard/students",
       icon: UserPlus,
-      color: "bg-blue-500/10 text-blue-600 hover:bg-blue-500/15"
+      color: "bg-primary text-primary hover:bg-primary"
     },
     {
       title: "Create Internship",
       desc: "Add a new domain category",
       href: "/dashboard/internships",
       icon: PlusCircle,
-      color: "bg-purple-500/10 text-purple-600 hover:bg-purple-500/15"
+      color: "bg-accent text-accent hover:bg-accent"
     },
     {
       title: "Issue Certificate",

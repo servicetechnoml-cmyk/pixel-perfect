@@ -95,7 +95,7 @@ const AdminDashboardLayout = () => {
       <div className="flex h-16 shrink-0 items-center px-6 border-b border-border/60">
         <Link to="/" className="flex items-center gap-2.5">
           <img src="/logo.jpg" alt="RSverse Logo" className="w-8 h-8 rounded-md object-contain bg-white" />
-          <span className="font-display text-lg font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+          <span className="font-display text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
             RSverse
           </span>
         </Link>
@@ -156,7 +156,7 @@ const AdminDashboardLayout = () => {
       <div className="p-4 border-t border-border/60">
         <div className="flex items-center justify-between p-2 rounded-xl bg-muted/40">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center text-primary font-bold text-xs border border-primary/20 shrink-0">
+            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary/20 to-accent flex items-center justify-center text-primary font-bold text-xs border border-primary/20 shrink-0">
               {initials}
             </div>
             <div className="flex flex-col min-w-0">
@@ -209,7 +209,7 @@ const AdminDashboardLayout = () => {
           {/* Mobile Logo */}
           <Link to="/" className="flex items-center gap-2 lg:hidden">
             <img src="/logo.jpg" alt="RSverse Logo" className="w-7 h-7 rounded-md object-contain bg-white" />
-            <span className="font-display font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+            <span className="font-display font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               RSverse
             </span>
           </Link>
