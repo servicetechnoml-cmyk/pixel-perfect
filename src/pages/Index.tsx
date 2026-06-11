@@ -105,7 +105,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Why TechnoML */}
+      {/* Why RSverse */}
       <section className="py-24 bg-gradient-to-b from-background via-primary/5 to-background">
         <div className="container mx-auto px-4">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">

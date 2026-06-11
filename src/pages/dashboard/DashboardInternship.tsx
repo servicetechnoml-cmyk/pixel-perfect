@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Calendar, CheckCircle2, MessageSquare } from "lucide-react";
+import { Link } from "react-router-dom";
 
 type Application = {
   id: string;
@@ -79,12 +80,45 @@ const DashboardInternship = () => {
           <h1 className="text-2xl font-bold tracking-tight text-foreground font-display">My Internship</h1>
           <p className="text-muted-foreground text-sm">Details, schedule, and mentors for your current program.</p>
         </div>
-        <div className="rounded-xl bg-card border border-border/50 p-12 text-center shadow-sm">
-          <div className="text-5xl mb-4">📋</div>
-          <h3 className="text-lg font-bold text-foreground mb-2">No Active Internship</h3>
-          <p className="text-sm text-muted-foreground max-w-md mx-auto">
-            You don't have an active internship yet. Apply for one and come back once approved.
-          </p>
+        <div className="relative">
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-background/80 backdrop-blur-[1px] rounded-xl border border-border/50">
+            <div className="text-5xl mb-4">📋</div>
+            <h3 className="text-lg font-bold text-foreground mb-2">No Active Internship</h3>
+            <p className="text-sm text-muted-foreground max-w-md mx-auto text-center mb-6">
+              You don't have an active internship yet. Apply for one to unlock your curriculum and mentor details.
+            </p>
+            <Button className="rounded-xl shadow-sm px-8" asChild>
+              <Link to="/internships">Apply for Internship</Link>
+            </Button>
+          </div>
+          <div className="opacity-40 pointer-events-none">
+            <div className="rounded-xl bg-card border border-border/50 shadow-sm overflow-hidden">
+              <div className="h-28 bg-gradient-to-r from-primary via-purple-600 to-primary px-6 py-6 flex items-end">
+                <Badge className="bg-white/20 text-white border-none backdrop-blur-sm">Sample Internship Domain</Badge>
+              </div>
+              <div className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="md:col-span-2 space-y-6">
+                    <div>
+                      <h2 className="text-xl font-bold text-foreground mb-2">Sample Internship Domain</h2>
+                      <p className="text-muted-foreground text-sm leading-relaxed">
+                        In this intensive internship, you will work on real-world projects and build production-ready skills. You will be assigned tasks mimicking a professional development environment.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="space-y-5">
+                    <div className="bg-muted/50 p-4 rounded-xl border border-border/40 space-y-3">
+                      <h3 className="font-semibold text-sm text-foreground">Timeline</h3>
+                      <div className="flex justify-between items-center text-sm">
+                        <span className="text-muted-foreground flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5" /> Start</span>
+                        <span className="font-medium text-foreground">DD/MM/YYYY</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );

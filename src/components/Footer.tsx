@@ -1,18 +1,15 @@
 import { Link } from "react-router-dom";
 import { Mail, MapPin } from "lucide-react";
-import logo from "@/assets/logo.png";
-
 const Footer = () => (
   <footer className="bg-primary text-primary-foreground">
     <div className="container mx-auto px-4 py-16">
       <div className="grid gap-10 md:grid-cols-4">
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <img src={logo} alt="RSverse" className="h-10 w-10" />
-            <span className="font-display text-xl font-bold">RSverse</span>
+            <img src="/footer logo.jpg" alt="RSverse" className="h-10 w-10 object-contain rounded-lg" />
           </div>
           <p className="text-sm text-primary-foreground/70 leading-relaxed">
-            AI Automation & Custom Software Engineering Company helping businesses grow smarter.
+            Fully Automated Virtual Internship Platform empowering the next generation of professionals.
           </p>
         </div>
 
@@ -21,9 +18,9 @@ const Footer = () => (
           <div className="flex flex-col gap-2">
             {[
               { label: "Home", path: "/" },
-              { label: "Services", path: "/services" },
-              { label: "Projects", path: "/projects" },
-              { label: "Blog", path: "/blog" },
+              { label: "Internships", path: "/internships" },
+              { label: "Resources", path: "/resources" },
+              { label: "Verify Certificate", path: "/verify-certificate" },
               { label: "About", path: "/about" },
               { label: "Contact", path: "/contact" },
             ].map((item) => (

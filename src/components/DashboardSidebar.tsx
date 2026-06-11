@@ -11,21 +11,21 @@ import {
 } from "lucide-react";
 
 const navLinks = [
-  { name: "Dashboard", href: "/student-dashboard", icon: LayoutDashboard },
-  { name: "My Internship", href: "/student-dashboard/internship", icon: Briefcase },
-  { name: "Assessments", href: "/student-dashboard/assessments", icon: ClipboardList },
-  { name: "Tasks", href: "/student-dashboard/tasks", icon: CheckSquare },
-  { name: "Progress", href: "/student-dashboard/progress", icon: BarChart },
-  { name: "Certificates", href: "/student-dashboard/certificates", icon: Award },
-  { name: "Profile", href: "/student-dashboard/profile", icon: User },
-  { name: "Support", href: "/student-dashboard/support", icon: LifeBuoy },
+  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "My Internship", href: "/dashboard/internship", icon: Briefcase },
+  { name: "Assessments", href: "/dashboard/assessments", icon: ClipboardList },
+  { name: "Tasks", href: "/dashboard/tasks", icon: CheckSquare },
+  { name: "Progress", href: "/dashboard/progress", icon: BarChart },
+  { name: "Certificates", href: "/dashboard/certificates", icon: Award },
+  { name: "Profile", href: "/dashboard/profile", icon: User },
+  { name: "Support", href: "/dashboard/support", icon: LifeBuoy },
 ];
 
 const DashboardSidebar = () => {
   const location = useLocation();
 
   const isActive = (href: string) => {
-    if (href === "/student-dashboard") {
+    if (href === "/dashboard") {
       return location.pathname === href;
     }
     return location.pathname.startsWith(href);

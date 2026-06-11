@@ -68,7 +68,7 @@ const CertificatePage = () => {
             <div className="text-center space-y-6">
               {/* Header */}
               <div>
-                <p className="text-sm uppercase tracking-[0.3em] text-gray-500 mb-2">TechnoML</p>
+                <p className="text-sm uppercase tracking-[0.3em] text-gray-500 mb-2">RSverse</p>
                 <h1 className="text-3xl md:text-4xl font-serif font-bold text-gray-900">Certificate of Completion</h1>
                 <div className="w-24 h-0.5 bg-primary mx-auto mt-4" />
               </div>

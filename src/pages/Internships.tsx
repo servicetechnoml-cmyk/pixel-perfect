@@ -159,7 +159,7 @@ const Internships = () => {
 
         {user && (
           <div className="text-center mt-12">
-            <Button variant="outline" onClick={() => navigate("/student-dashboard")}>
+            <Button variant="outline" onClick={() => navigate("/dashboard")}>
               Go to My Dashboard
             </Button>
           </div>

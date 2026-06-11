@@ -136,10 +136,44 @@ const DashboardTasks = () => {
       </div>
 
       {apps.length === 0 ? (
-        <div className="rounded-xl bg-card border border-border/50 p-12 text-center shadow-sm">
-          <div className="text-5xl mb-4">📝</div>
-          <h3 className="text-lg font-bold text-foreground mb-2">No Tasks Yet</h3>
-          <p className="text-sm text-muted-foreground">Tasks will appear once your internship application is approved.</p>
+        <div className="relative">
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-background/80 backdrop-blur-[1px] rounded-lg">
+            <div className="text-5xl mb-4">📝</div>
+            <p className="text-base font-semibold text-foreground mb-4 px-4 text-center">Start your journey to unlock and manage your tasks</p>
+            <Button className="rounded-xl shadow-sm px-8" asChild>
+              <Link to="/internships">Apply for Internship</Link>
+            </Button>
+          </div>
+          <div className="opacity-40 pointer-events-none">
+            <div className="rounded-xl bg-card border border-border/50 shadow-sm overflow-hidden divide-y divide-border/40">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="p-5 bg-muted/10">
+                  <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
+                    <div className="flex gap-3 items-start">
+                      <div className="mt-1 h-5 w-5 rounded-full flex items-center justify-center border-2 shrink-0 border-muted-foreground/30" />
+                      <div>
+                        <h3 className="text-sm font-bold mb-0.5 text-foreground">
+                          Sample Task {i}: Introduction to Module
+                        </h3>
+                        <p className="text-xs text-muted-foreground max-w-lg">Complete the introductory readings and set up your development environment.</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 ml-8 md:ml-0">
+                      <Badge variant="outline" className="text-[10px]">
+                        <Clock className="h-2.5 w-2.5 mr-1" /> Week {i}
+                      </Badge>
+                      <div className="flex gap-2">
+                        <Input placeholder="Submission URL..." disabled className="h-8 text-xs w-48" />
+                        <Button size="sm" className="h-8 text-xs rounded-lg" disabled>
+                          <Send className="h-3 w-3 mr-1" /> Submit
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       ) : (
         apps.map((app) => {

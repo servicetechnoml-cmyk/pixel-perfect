@@ -43,7 +43,7 @@ const Login = () => {
         return;
       }
       toast.success("Logged in successfully!");
-      navigate(roleData ? "/admin" : "/student-dashboard");
+      navigate("/dashboard");
     } else {
       setLoading(false);
       navigate("/");

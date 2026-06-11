@@ -134,7 +134,7 @@ const DashboardOverview = () => {
           <p className="text-muted-foreground text-sm">Welcome back, {displayName}! Here's your internship progress.</p>
         </div>
         <Button className="rounded-xl shadow-sm" asChild>
-          <Link to="/student-dashboard/tasks">
+          <Link to="/dashboard/tasks">
             View Active Tasks <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>
@@ -167,13 +167,31 @@ const DashboardOverview = () => {
               <h2 className="text-base font-bold text-foreground">Active Tasks</h2>
               <p className="text-xs text-muted-foreground">Your current ongoing internship tasks</p>
             </div>
-            <Link to="/student-dashboard/tasks" className="text-xs text-primary font-semibold hover:underline">
+            <Link to="/dashboard/tasks" className="text-xs text-primary font-semibold hover:underline">
               View All
             </Link>
           </div>
           <div className="p-5 space-y-3">
             {totalTasks === 0 ? (
-              <p className="text-sm text-muted-foreground py-6 text-center">No tasks assigned yet. Check back after your internship is approved!</p>
+              <div className="relative">
+                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-background/80 backdrop-blur-[1px] rounded-lg">
+                  <p className="text-sm font-semibold text-foreground mb-3 px-4 text-center">Start your journey to unlock tasks</p>
+                  <Button size="sm" className="rounded-lg shadow-sm" asChild>
+                    <Link to="/internships">Apply for Internship</Link>
+                  </Button>
+                </div>
+                <div className="opacity-40 pointer-events-none space-y-3">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="flex items-center justify-between p-3 rounded-lg border border-border/40 bg-muted/20">
+                      <div className="flex items-center gap-3">
+                        <div className="h-2.5 w-2.5 rounded-full bg-orange-400" />
+                        <span className="text-sm font-medium text-foreground">Sample Task {i}</span>
+                      </div>
+                      <Badge variant="secondary" className="text-[11px]">Pending</Badge>
+                    </div>
+                  ))}
+                </div>
+              </div>
             ) : (
               tasks.slice(0, 3).map((task, i) => {
                 const sub = submissions.find((s) => s.task_id === task.id);
@@ -227,7 +245,7 @@ const DashboardOverview = () => {
                   )}
                 </div>
                 <Button className="w-full rounded-lg" asChild>
-                  <Link to="/student-dashboard/internship">Go to Internship</Link>
+                  <Link to="/dashboard/internship">Go to Internship</Link>
                 </Button>
               </>
             ) : (

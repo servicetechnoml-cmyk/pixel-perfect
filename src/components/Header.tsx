@@ -14,10 +14,18 @@ import {
   Calendar,
   Mail,
   Info,
-  FileText
+  FileText,
+  User,
+  Settings
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import logo from "@/assets/logo.png";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navigationMenu = [
   {
@@ -71,10 +79,7 @@ const Header = () => {
       <div className="container mx-auto flex items-center h-16 px-4">
         {/* Logo — left */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
-          <img src={logo} alt="RSverse" className="h-10 w-10" />
-          <span className="font-display text-xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-            RSverse
-          </span>
+          <img src="/logo.jpg" alt="RSverse" className="h-10 w-10 object-contain rounded-lg" />
         </Link>
 
         {/* Desktop Navigation — centered */}
@@ -130,30 +135,31 @@ const Header = () => {
 
         {/* Right side — auth buttons */}
         <div className="hidden lg:flex items-center gap-4 shrink-0">
-          {user && (
-            <Link
-              to="/student-dashboard"
-              className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-            >
-              <GraduationCap size={16} /> Dashboard
-            </Link>
-          )}
-
-          {isAdmin && (
-            <Link
-              to="/admin"
-              className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-            >
-              <LayoutDashboard size={16} /> Admin
-            </Link>
-          )}
           {user ? (
-            <button
-              onClick={handleSignOut}
-              className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground"
-            >
-              <LogOut size={16} /> Sign Out
-            </button>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center justify-center h-10 w-10 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors focus:outline-none">
+                <User size={20} />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuItem asChild>
+                  <Link to="/dashboard" className="flex items-center gap-2 cursor-pointer w-full">
+                    {isAdmin ? <LayoutDashboard size={16} /> : <GraduationCap size={16} />}
+                    {isAdmin ? "Admin Dashboard" : "Dashboard"}
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/dashboard/profile" className="flex items-center gap-2 cursor-pointer w-full">
+                    <Settings size={16} />
+                    Settings
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleSignOut} className="flex items-center gap-2 text-destructive focus:text-destructive cursor-pointer w-full">
+                  <LogOut size={16} />
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <Link
               to="/login"
@@ -224,20 +230,11 @@ const Header = () => {
           <div className="pt-4 space-y-2">
             {user && (
               <Link
-                to="/student-dashboard"
+                to="/dashboard"
                 onClick={() => setMobileOpen(false)}
                 className="flex items-center gap-2 py-3 text-sm font-semibold text-primary"
               >
-                <GraduationCap size={18} /> Student Dashboard
-              </Link>
-            )}
-            {isAdmin && (
-              <Link
-                to="/admin"
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-2 py-3 text-sm font-semibold text-primary"
-              >
-                <LayoutDashboard size={18} /> Admin Dashboard
+                {isAdmin ? <LayoutDashboard size={18} /> : <GraduationCap size={18} />} {isAdmin ? "Admin Dashboard" : "Dashboard"}
               </Link>
             )}
             {user ? (

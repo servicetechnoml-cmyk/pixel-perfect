@@ -2,11 +2,14 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "@/hooks/useAuth";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import LayoutWrapper from "./components/LayoutWrapper";
 import DashboardLayout from "./components/DashboardLayout";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Index from "./pages/Index";
+import Resources from "./pages/Resources";
 import Services from "./pages/Services";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -34,6 +37,39 @@ import DashboardSupport from "./pages/dashboard/DashboardSupport";
 
 const queryClient = new QueryClient();
 
+const DashboardRouter = () => {
+  const { user, isAdmin, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-background">
+        <div className="flex flex-col items-center gap-3">
+          <div className="h-10 w-10 rounded-full border-4 border-primary/30 border-t-primary animate-spin" />
+          <p className="text-sm text-muted-foreground font-medium">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (isAdmin) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 pt-16">
+          <AdminDashboard />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  return <DashboardLayout />;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -42,8 +78,8 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <Routes>
-            {/* Dashboard routes — sidebar layout, no Header/Footer */}
-            <Route path="/student-dashboard" element={<DashboardLayout />}>
+            {/* Dashboard routes — sidebar layout for students, single page for admins */}
+            <Route path="/dashboard" element={<DashboardRouter />}>
               <Route index element={<DashboardOverview />} />
               <Route path="internship" element={<DashboardInternship />} />
               <Route path="assessments" element={<DashboardAssessments />} />
@@ -57,6 +93,7 @@ const App = () => (
             {/* Public routes — wrapped with Header/Footer */}
             <Route element={<LayoutWrapper />}>
               <Route path="/" element={<Index />} />
+              <Route path="/resources" element={<Resources />} />
               <Route path="/services" element={<Services />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
@@ -71,7 +108,6 @@ const App = () => (
               <Route path="/student-dashboard-legacy" element={<StudentDashboard />} />
               <Route path="/verify-certificate" element={<VerifyCertificate />} />
               <Route path="/certificate/:id" element={<CertificatePage />} />
-              <Route path="/admin" element={<AdminDashboard />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

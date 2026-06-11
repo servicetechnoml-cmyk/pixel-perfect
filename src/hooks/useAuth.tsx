@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      console.log("Auth event:", _event);
       if (_event === 'SIGNED_OUT') {
         setUser(null);
         setIsAdmin(false);
@@ -46,7 +47,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const u = session?.user ?? null;
       setUser(u);
       if (u) {
-        await Promise.all([checkRole(u.id, u.email), checkBlocked(u.id)]);
+        try {
+          await Promise.all([checkRole(u.id, u.email), checkBlocked(u.id)]);
+        } catch (e) {
+          console.error("Auth init error:", e);
+        }
       } else {
         setIsAdmin(false);
         setIsBlocked(false);
@@ -55,18 +60,36 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
 
     supabase.auth.getUser().then(async ({ data: { user }, error }) => {
+      console.log("getUser result:", { user: user?.email, error });
       if (error || !user) {
         setUser(null);
         setIsAdmin(false);
         setIsBlocked(false);
+        setLoading(false);
       } else {
         setUser(user);
-        await Promise.all([checkRole(user.id, user.email), checkBlocked(user.id)]);
+        try {
+          await Promise.all([checkRole(user.id, user.email), checkBlocked(user.id)]);
+        } catch (e) {
+          console.error("Auth init error:", e);
+        } finally {
+          setLoading(false);
+        }
       }
-      setLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    // Failsafe: force loading to false after 5 seconds
+    const timeout = setTimeout(() => {
+      setLoading(prev => {
+        if (prev) console.warn("Forced loading to false via failsafe timeout.");
+        return false;
+      });
+    }, 5000);
+
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(timeout);
+    };
   }, []);
 
   const signOut = async () => {
