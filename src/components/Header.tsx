@@ -163,7 +163,7 @@ const Header = () => {
           ) : (
             <Link
               to="/login"
-              className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-primary to-purple-600 text-white px-5 py-2 text-sm font-bold hover:shadow-lg hover:shadow-primary/25 hover:scale-105 transition-all"
+              className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-primary to-accent text-white px-5 py-2 text-sm font-bold hover:shadow-lg hover:shadow-primary/25 hover:scale-105 transition-all"
             >
               Sign In
             </Link>
@@ -251,7 +251,7 @@ const Header = () => {
               <Link
                 to="/login"
                 onClick={() => setMobileOpen(false)}
-                className="mt-2 block w-full text-center rounded-lg bg-gradient-to-r from-primary to-purple-600 text-white px-5 py-2.5 text-sm font-bold"
+                className="mt-2 block w-full text-center rounded-lg bg-gradient-to-r from-primary to-accent text-white px-5 py-2.5 text-sm font-bold"
               >
                 Sign In
               </Link>

@@ -423,7 +423,7 @@ const AdminStudents = () => {
                       {/* Name / Avatar */}
                       <td className="py-3.5 px-4">
                         <div className="flex items-center gap-3">
-                          <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary/10 to-purple-500/10 border border-primary/20 flex items-center justify-center text-primary text-xs font-bold shrink-0 overflow-hidden">
+                          <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary/10 to-accent border border-primary/20 flex items-center justify-center text-primary text-xs font-bold shrink-0 overflow-hidden">
                             {student.avatar_url ? (
                               <img src={student.avatar_url} alt="" className="h-full w-full object-cover" />
                             ) : (

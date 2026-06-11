@@ -21,10 +21,10 @@ const Contact = () => {
   return (
     <div>
       {/* Hero */}
-      <section className="py-32 bg-gradient-to-br from-primary via-purple-600 to-primary text-white relative overflow-hidden">
+      <section className="py-32 bg-gradient-to-br from-primary via-accent to-primary text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-white blur-[120px]" />
-          <div className="absolute bottom-0 right-1/4 w-64 h-64 rounded-full bg-purple-200 blur-[80px]" />
+          <div className="absolute bottom-0 right-1/4 w-64 h-64 rounded-full bg-accent blur-[80px]" />
         </div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-white/70 text-sm font-semibold uppercase tracking-widest mb-4">Get In Touch</motion.p>
@@ -60,7 +60,7 @@ const Contact = () => {
                 { icon: Clock, label: "Response Time", value: "Within 24 hours" },
               ].map((c, i) => (
                 <motion.div key={c.label} variants={fadeUp} custom={i + 1} className="flex items-start gap-4 p-4 rounded-xl bg-card shadow-card border border-primary/10">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-accent flex items-center justify-center shrink-0">
                     <c.icon className="text-primary" size={22} />
                   </div>
                   <div>
@@ -168,7 +168,7 @@ const Contact = () => {
                   <motion.div variants={fadeUp} custom={7}>
                   <button
                       type="submit"
-                      className="w-full rounded-xl bg-gradient-to-r from-primary to-purple-600 text-white px-6 py-3.5 font-bold hover:shadow-lg hover:shadow-primary/25 hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
+                      className="w-full rounded-xl bg-gradient-to-r from-primary to-accent text-white px-6 py-3.5 font-bold hover:shadow-lg hover:shadow-primary/25 hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
                     >
                       Send Message <Send size={18} />
                     </button>
