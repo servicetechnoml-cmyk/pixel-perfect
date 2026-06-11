@@ -25,10 +25,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   const checkRole = async (userId: string, email?: string) => {
-    if (email === "admin@technoml.in") {
-      setIsAdmin(true);
-      return;
-    }
     const { data } = await supabase.rpc("has_role", { _user_id: userId, _role: "admin" });
     setIsAdmin(!!data);
   };
