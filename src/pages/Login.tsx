@@ -16,25 +16,37 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    setLoading(false);
     if (error) {
+      setLoading(false);
       toast.error(error.message);
-    } else {
-      toast.success("Logged in successfully!");
-      // Check if user is admin and redirect accordingly
-      if (data.user) {
-        const { data: roleData } = await supabase.rpc("has_role", {
-          _user_id: data.user.id,
-          _role: "admin" as const,
-        });
-        if (roleData) {
-          navigate("/admin");
-        } else {
-          navigate("/student-dashboard");
-        }
-      } else {
-        navigate("/");
+      return;
+    }
+    if (data.user) {
+      const { data: roleData } = await supabase.rpc("has_role", {
+        _user_id: data.user.id,
+        _role: "admin" as const,
+      });
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("is_approved, is_blocked")
+        .eq("user_id", data.user.id)
+        .maybeSingle();
+      setLoading(false);
+      if (profile?.is_blocked) {
+        await supabase.auth.signOut();
+        toast.error("Your account has been blocked. Contact the administrator.");
+        return;
       }
+      if (!roleData && !profile?.is_approved) {
+        await supabase.auth.signOut();
+        toast.error("Your account is pending admin approval.");
+        return;
+      }
+      toast.success("Logged in successfully!");
+      navigate(roleData ? "/admin" : "/student-dashboard");
+    } else {
+      setLoading(false);
+      navigate("/");
     }
   };
 
