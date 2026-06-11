@@ -96,7 +96,7 @@ const AdminDashboardLayout = () => {
             T
           </div>
           <span className="font-display text-lg font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-            TechnoML LMS
+            RSverse LMS
           </span>
         </Link>
       </div>
