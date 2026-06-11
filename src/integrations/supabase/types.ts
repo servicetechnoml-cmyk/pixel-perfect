@@ -321,6 +321,7 @@ export type Database = {
           email: string | null
           full_name: string | null
           id: string
+          is_approved: boolean
           is_blocked: boolean | null
           phone: string | null
           updated_at: string | null
@@ -332,6 +333,7 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
+          is_approved?: boolean
           is_blocked?: boolean | null
           phone?: string | null
           updated_at?: string | null
@@ -343,6 +345,7 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
+          is_approved?: boolean
           is_blocked?: boolean | null
           phone?: string | null
           updated_at?: string | null
