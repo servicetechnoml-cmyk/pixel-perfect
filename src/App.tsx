@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import LayoutWrapper from "./components/LayoutWrapper";
 import DashboardLayout from "./components/DashboardLayout";
+import AdminDashboardLayout from "./components/AdminDashboardLayout";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Index from "./pages/Index";
@@ -20,7 +21,6 @@ import BlogPost from "./pages/BlogPost";
 import Projects from "./pages/Projects";
 import Certifications from "./pages/Certifications";
 import History from "./pages/History";
-import AdminDashboard from "./pages/AdminDashboard";
 import Internships from "./pages/Internships";
 import StudentDashboard from "./pages/StudentDashboard";
 import VerifyCertificate from "./pages/VerifyCertificate";
@@ -34,6 +34,17 @@ import DashboardProgress from "./pages/dashboard/DashboardProgress";
 import DashboardCertificates from "./pages/dashboard/DashboardCertificates";
 import DashboardProfile from "./pages/dashboard/DashboardProfile";
 import DashboardSupport from "./pages/dashboard/DashboardSupport";
+
+// Admin page imports
+import AdminOverview from "./pages/admin/AdminOverview";
+import AdminStudents from "./pages/admin/AdminStudents";
+import AdminReports from "./pages/admin/AdminReports";
+import AdminSettings from "./pages/admin/AdminSettings";
+import AdminInternships from "./components/admin/AdminInternships";
+import AdminBlog from "./components/admin/AdminBlog";
+import AdminProjects from "./components/admin/AdminProjects";
+import AdminCertifications from "./components/admin/AdminCertifications";
+import AdminHistory from "./components/admin/AdminHistory";
 
 const queryClient = new QueryClient();
 
@@ -56,18 +67,15 @@ const DashboardRouter = () => {
   }
 
   if (isAdmin) {
-    return (
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1 pt-16">
-          <AdminDashboard />
-        </main>
-        <Footer />
-      </div>
-    );
+    return <AdminDashboardLayout />;
   }
 
   return <DashboardLayout />;
+};
+
+const DashboardIndexSelector = () => {
+  const { isAdmin } = useAuth();
+  return isAdmin ? <AdminOverview /> : <DashboardOverview />;
 };
 
 const App = () => (
@@ -78,16 +86,29 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <Routes>
-            {/* Dashboard routes — sidebar layout for students, single page for admins */}
+            {/* Dashboard routes */}
             <Route path="/dashboard" element={<DashboardRouter />}>
-              <Route index element={<DashboardOverview />} />
+              {/* Shared dashboard index and profile */}
+              <Route index element={<DashboardIndexSelector />} />
+              <Route path="profile" element={<DashboardProfile />} />
+
+              {/* Student dashboard routes */}
               <Route path="internship" element={<DashboardInternship />} />
               <Route path="assessments" element={<DashboardAssessments />} />
               <Route path="tasks" element={<DashboardTasks />} />
               <Route path="progress" element={<DashboardProgress />} />
               <Route path="certificates" element={<DashboardCertificates />} />
-              <Route path="profile" element={<DashboardProfile />} />
               <Route path="support" element={<DashboardSupport />} />
+
+              {/* Admin dashboard routes */}
+              <Route path="students" element={<AdminStudents />} />
+              <Route path="internships" element={<AdminInternships />} />
+              <Route path="blog" element={<AdminBlog />} />
+              <Route path="projects" element={<AdminProjects />} />
+              <Route path="certifications" element={<AdminCertifications />} />
+              <Route path="history" element={<AdminHistory />} />
+              <Route path="reports" element={<AdminReports />} />
+              <Route path="settings" element={<AdminSettings />} />
             </Route>
 
             {/* Public routes — wrapped with Header/Footer */}

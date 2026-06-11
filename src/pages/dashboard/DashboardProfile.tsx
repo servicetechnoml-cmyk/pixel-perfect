@@ -13,9 +13,13 @@ const DashboardProfile = () => {
     phone: "",
     company: "",
     email: "",
+    avatar_url: "",
   });
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
+  const [passwords, setPasswords] = useState({ new: "", confirm: "" });
+  const [updatingPassword, setUpdatingPassword] = useState(false);
 
   useEffect(() => {
     if (user) fetchProfile();
@@ -25,7 +29,7 @@ const DashboardProfile = () => {
     if (!user) return;
     const { data } = await supabase
       .from("profiles")
-      .select("full_name, email, phone, company")
+      .select("full_name, email, phone, company, avatar_url")
       .eq("user_id", user.id)
       .single();
     if (data) {
@@ -34,6 +38,7 @@ const DashboardProfile = () => {
         email: data.email || user.email || "",
         phone: data.phone || "",
         company: data.company || "",
+        avatar_url: data.avatar_url || "",
       });
     } else {
       setProfile((prev) => ({ ...prev, email: user.email || "" }));
@@ -59,6 +64,50 @@ const DashboardProfile = () => {
       toast({ title: "Success", description: "Profile updated successfully." });
     }
     setSaving(false);
+  };
+
+  const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      if (!event.target.files || event.target.files.length === 0) return;
+      setUploading(true);
+      const file = event.target.files[0];
+      const fileExt = file.name.split('.').pop();
+      const filePath = `${user?.id}-${Math.random()}.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file);
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage.from('avatars').getPublicUrl(filePath);
+
+      const { error: updateError } = await supabase.from('profiles').update({ avatar_url: publicUrl }).eq('user_id', user!.id);
+      if (updateError) throw updateError;
+
+      setProfile({ ...profile, avatar_url: publicUrl });
+      toast({ title: "Avatar updated successfully!" });
+    } catch (error: any) {
+      toast({ title: "Error uploading avatar", description: error.message, variant: "destructive" });
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handlePasswordUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passwords.new !== passwords.confirm) {
+      return toast({ title: "Passwords do not match", variant: "destructive" });
+    }
+    if (passwords.new.length < 6) {
+      return toast({ title: "Password must be at least 6 characters", variant: "destructive" });
+    }
+    setUpdatingPassword(true);
+    const { error } = await supabase.auth.updateUser({ password: passwords.new });
+    setUpdatingPassword(false);
+    if (error) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    } else {
+      toast({ title: "Success", description: "Password updated successfully" });
+      setPasswords({ new: "", confirm: "" });
+    }
   };
 
   const initials = profile.full_name
@@ -87,15 +136,24 @@ const DashboardProfile = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Avatar Card */}
         <div className="rounded-xl bg-card border border-border/50 shadow-sm p-6 flex flex-col items-center text-center">
-          <div className="h-28 w-28 rounded-full border-4 border-card shadow-lg bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center text-primary text-3xl font-bold mb-4">
-            {initials}
+          <div className="h-28 w-28 rounded-full border-4 border-card shadow-lg bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center text-primary text-3xl font-bold mb-4 overflow-hidden relative group">
+            {profile.avatar_url ? (
+              <img src={profile.avatar_url} alt="Avatar" className="h-full w-full object-cover" />
+            ) : (
+              initials
+            )}
+            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white cursor-pointer">
+              <Upload className="h-5 w-5 mb-1" />
+              <span className="text-[10px] font-medium">Upload</span>
+              <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" onChange={handleAvatarUpload} disabled={uploading} />
+            </div>
           </div>
           <h2 className="text-lg font-bold text-foreground mb-0.5">{profile.full_name || "Student"}</h2>
           <p className="text-xs text-muted-foreground mb-4">{profile.company || "Not set"}</p>
           <div className="w-full space-y-2">
-            <Button variant="outline" className="w-full text-xs relative overflow-hidden">
-              <Upload className="mr-1.5 h-3.5 w-3.5" /> Change Avatar
-              <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" />
+            <Button variant="outline" className="w-full text-xs relative overflow-hidden" disabled={uploading}>
+              <Upload className="mr-1.5 h-3.5 w-3.5" /> {uploading ? "Uploading..." : "Change Avatar"}
+              <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" accept="image/*" onChange={handleAvatarUpload} disabled={uploading} />
             </Button>
           </div>
         </div>
@@ -166,6 +224,42 @@ const DashboardProfile = () => {
               <div className="pt-3 flex justify-end">
                 <Button type="submit" className="rounded-lg px-6 h-9 text-sm" disabled={saving}>
                   {saving ? "Saving..." : "Save Changes"}
+                </Button>
+              </div>
+            </form>
+          </div>
+          
+          <div className="p-5 border-t border-border/40">
+            <h2 className="text-base font-bold text-foreground mb-1">Security</h2>
+            <p className="text-xs text-muted-foreground mb-4">Update your password to keep your account secure.</p>
+            <form onSubmit={handlePasswordUpdate} className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-medium text-foreground">New Password</label>
+                  <Input
+                    type="password"
+                    className="h-9 text-sm"
+                    value={passwords.new}
+                    onChange={(e) => setPasswords({ ...passwords, new: e.target.value })}
+                    placeholder="Min. 6 characters"
+                    required
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-medium text-foreground">Confirm Password</label>
+                  <Input
+                    type="password"
+                    className="h-9 text-sm"
+                    value={passwords.confirm}
+                    onChange={(e) => setPasswords({ ...passwords, confirm: e.target.value })}
+                    placeholder="Repeat new password"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end">
+                <Button type="submit" variant="secondary" className="rounded-lg px-6 h-9 text-sm" disabled={updatingPassword}>
+                  {updatingPassword ? "Updating..." : "Update Password"}
                 </Button>
               </div>
             </form>
