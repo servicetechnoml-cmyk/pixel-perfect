@@ -24,7 +24,7 @@ const DashboardTopNav = () => {
         <span className="sr-only">Toggle menu</span>
       </Button>
       <Link to="/" className="flex items-center gap-2 lg:hidden">
-        <img src="/logo.jpg" alt="RSverse Logo" className="w-7 h-7 rounded-md object-contain bg-white" />
+        <img src="/logo.jpg" alt="RSverse Logo" className="w-7 h-7 rounded-md object-contain" />
         <span className="font-display font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
           RSverse
         </span>
