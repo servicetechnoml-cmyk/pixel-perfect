@@ -27,7 +27,7 @@ type CompanySettings = {
 };
 
 const defaultSettings: CompanySettings = {
-  name: "TechnoML Solutions",
+  name: "RSverse Solutions",
   address: "102, Innovation Hub, Hitech City, Hyderabad, India - 500081",
   email: "hr@technoml.com",
   phone: "+91 80081 23456",

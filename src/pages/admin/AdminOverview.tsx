@@ -204,7 +204,7 @@ const AdminOverview = () => {
       <div>
         <h1 className="font-display text-3xl font-bold tracking-tight text-foreground">Overview Dashboard</h1>
         <p className="text-muted-foreground mt-1 text-sm">
-          Real-time summary of TechnoML learning portal and internship performance.
+          Real-time summary of RSverse learning portal and internship performance.
         </p>
       </div>
 
