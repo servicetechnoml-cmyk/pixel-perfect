@@ -47,11 +47,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const u = session?.user ?? null;
       setUser(u);
       if (u) {
-        try {
-          await Promise.all([checkRole(u.id, u.email), checkBlocked(u.id)]);
-        } catch (e) {
-          console.error("Auth init error:", e);
-        }
+        // Defer Supabase calls to avoid deadlocking the auth callback
+        setTimeout(() => {
+          Promise.all([checkRole(u.id, u.email), checkBlocked(u.id)])
+            .catch((e) => console.error("Auth init error:", e))
+            .finally(() => setLoading(false));
+        }, 0);
+        return;
       } else {
         setIsAdmin(false);
         setIsBlocked(false);
