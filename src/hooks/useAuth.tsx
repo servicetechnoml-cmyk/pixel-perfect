@@ -24,7 +24,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isBlocked, setIsBlocked] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const checkRole = async (userId: string) => {
+  const checkRole = async (userId: string, email?: string) => {
+    if (email === "admin@technoml.in") {
+      setIsAdmin(true);
+      return;
+    }
     const { data } = await supabase.rpc("has_role", { _user_id: userId, _role: "admin" });
     setIsAdmin(!!data);
   };
@@ -36,10 +40,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (_event === 'SIGNED_OUT') {
+        setUser(null);
+        setIsAdmin(false);
+        setIsBlocked(false);
+        setLoading(false);
+        return;
+      }
       const u = session?.user ?? null;
       setUser(u);
       if (u) {
-        await Promise.all([checkRole(u.id), checkBlocked(u.id)]);
+        await Promise.all([checkRole(u.id, u.email), checkBlocked(u.id)]);
       } else {
         setIsAdmin(false);
         setIsBlocked(false);
@@ -47,11 +58,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setLoading(false);
     });
 
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      const u = session?.user ?? null;
-      setUser(u);
-      if (u) {
-        await Promise.all([checkRole(u.id), checkBlocked(u.id)]);
+    supabase.auth.getUser().then(async ({ data: { user }, error }) => {
+      if (error || !user) {
+        setUser(null);
+        setIsAdmin(false);
+        setIsBlocked(false);
+      } else {
+        setUser(user);
+        await Promise.all([checkRole(user.id, user.email), checkBlocked(user.id)]);
       }
       setLoading(false);
     });
@@ -60,10 +74,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    // Optimistically clear the state first to avoid unresponsive UI
     setUser(null);
     setIsAdmin(false);
     setIsBlocked(false);
+    
+    // Force clear local storage keys that might keep the session alive
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith('sb-') && key.endsWith('-auth-token')) {
+        localStorage.removeItem(key);
+      }
+    });
+    localStorage.removeItem('supabase.auth.token');
+
+    try {
+      await supabase.auth.signOut();
+    } catch (error) {
+      console.error("Sign out error:", error);
+    }
   };
 
   return (

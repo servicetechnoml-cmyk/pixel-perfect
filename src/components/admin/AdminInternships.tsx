@@ -31,12 +31,17 @@ type Submission = {
   submission_url: string; status: string; feedback: string | null;
   task?: { title: string; week_number: number };
 };
+type Certificate = {
+  id: string; student_name: string; domain_name: string;
+  duration_text: string; issue_date: string | null;
+};
 
 const AdminInternships = () => {
   const [domains, setDomains] = useState<Domain[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [applications, setApplications] = useState<Application[]>([]);
   const [submissions, setSubmissions] = useState<Submission[]>([]);
+  const [certificates, setCertificates] = useState<Certificate[]>([]);
   const [newDomain, setNewDomain] = useState({ title: "", description: "", duration_months: 1 });
   const [newTask, setNewTask] = useState({ title: "", description: "", week_number: 1, domain_id: "" });
   const [domainDialogOpen, setDomainDialogOpen] = useState(false);
@@ -46,14 +51,16 @@ const AdminInternships = () => {
   useEffect(() => { fetchAll(); }, []);
 
   const fetchAll = async () => {
-    const [{ data: d }, { data: t }, { data: a }, { data: s }] = await Promise.all([
+    const [{ data: d }, { data: t }, { data: a }, { data: s }, { data: c }] = await Promise.all([
       supabase.from("internship_domains").select("*").order("created_at", { ascending: false }),
       supabase.from("internship_tasks").select("*").order("week_number"),
       supabase.from("internship_applications").select("*").order("created_at", { ascending: false }),
       supabase.from("internship_submissions").select("*"),
+      supabase.from("internship_certificates").select("*").order("issue_date", { ascending: false }),
     ]);
     setDomains(d || []);
     setTasks(t || []);
+    setCertificates(c || []);
 
     // Enrich applications with profile + domain
     const apps = a || [];
@@ -162,6 +169,7 @@ const AdminInternships = () => {
         <TabsTrigger value="tasks">Tasks</TabsTrigger>
         <TabsTrigger value="applications">Applications</TabsTrigger>
         <TabsTrigger value="submissions">Submissions</TabsTrigger>
+        <TabsTrigger value="certificates">Certificates</TabsTrigger>
       </TabsList>
 
       {/* DOMAINS */}
@@ -316,6 +324,28 @@ const AdminInternships = () => {
             </Card>
           ))}
           {submissions.length === 0 && <p className="text-muted-foreground text-sm">No submissions yet.</p>}
+        </div>
+      </TabsContent>
+
+      {/* CERTIFICATES */}
+      <TabsContent value="certificates">
+        <h2 className="text-lg font-semibold text-foreground mb-4">Issued Certificates</h2>
+        <div className="space-y-3">
+          {certificates.map((cert) => (
+            <Card key={cert.id}>
+              <CardContent className="flex items-center justify-between py-4">
+                <div>
+                  <p className="font-medium text-foreground">{cert.student_name}</p>
+                  <p className="text-sm text-muted-foreground">{cert.domain_name} • {cert.duration_text}</p>
+                  <p className="text-xs text-muted-foreground mt-1">ID: {cert.id} | Issued: {cert.issue_date ? new Date(cert.issue_date).toLocaleDateString() : 'N/A'}</p>
+                </div>
+                <Button size="sm" variant="outline" onClick={() => window.open(`/certificate/${cert.id}`, "_blank")} className="gap-2">
+                  <Award size={14} /> View
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+          {certificates.length === 0 && <p className="text-muted-foreground text-sm">No certificates issued yet.</p>}
         </div>
       </TabsContent>
     </Tabs>

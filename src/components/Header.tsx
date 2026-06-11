@@ -1,114 +1,157 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, LogOut, LayoutDashboard, ChevronDown, GraduationCap, BookOpen, Award, ShieldCheck } from "lucide-react";
+import {
+  Menu,
+  X,
+  LogOut,
+  LayoutDashboard,
+  ChevronDown,
+  GraduationCap,
+  BookOpen,
+  Award,
+  ShieldCheck,
+  Briefcase,
+  Calendar,
+  Mail,
+  Info,
+  FileText
+} from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import logo from "@/assets/logo.png";
 
-const navItems = [
-  { label: "Home", path: "/" },
-  { label: "Services", path: "/services" },
-  { label: "Projects", path: "/projects" },
-  { label: "Blog", path: "/blog" },
-  { label: "Certifications", path: "/certifications" },
-  { label: "History", path: "/history" },
-  { label: "About", path: "/about" },
-  { label: "Contact", path: "/contact" },
+const navigationMenu = [
+  {
+    label: "Explore",
+    items: [
+      { label: "Learning Resources", path: "/resources", icon: BookOpen, description: "Self-learning docs and videos" },
+      { label: "Projects", path: "/projects", icon: Briefcase, description: "Real-world tasks and challenges" },
+      { label: "Certifications", path: "/certifications", icon: Award, description: "Verified training credentials" },
+    ],
+  },
+  {
+    label: "Internships",
+    items: [
+      { label: "Browse Internships", path: "/internships", icon: GraduationCap, description: "Start virtual training" },
+      { label: "Verify Certificate", path: "/verify-certificate", icon: ShieldCheck, description: "Verify student credentials" },
+    ],
+  },
+  {
+    label: "Company",
+    items: [
+      { label: "About Us", path: "/about", icon: Info, description: "Who we are and our mission" },
+      { label: "History", path: "/history", icon: Calendar, description: "Our growth and milestones" },
+      { label: "Contact", path: "/contact", icon: Mail, description: "Get in touch with us" },
+    ],
+  },
 ];
-
-const getInternshipSubMenu = (isLoggedIn: boolean) => {
-  const items = [
-    { label: "Programs", path: "/internships", icon: BookOpen },
-    { label: "Verify Certificate", path: "/verify-certificate", icon: ShieldCheck },
-  ];
-  if (isLoggedIn) {
-    items.splice(1, 0, { label: "My Dashboard", path: "/student-dashboard", icon: GraduationCap });
-  }
-  return items;
-};
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [internshipOpen, setInternshipOpen] = useState(false);
+  const [expandedMobileMenu, setExpandedMobileMenu] = useState<string | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isAdmin, signOut } = useAuth();
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setInternshipOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
 
   const handleSignOut = async () => {
     await signOut();
     setMobileOpen(false);
-    setInternshipOpen(false);
     navigate("/login");
   };
 
-  const isInternshipRoute = ["/internships", "/student-dashboard", "/verify-certificate"].includes(location.pathname);
+  const isDropdownActive = (items: { path: string }[]) => {
+    return items.some((item) => location.pathname === item.path);
+  };
+
+  const toggleMobileMenu = (label: string) => {
+    setExpandedMobileMenu(expandedMobileMenu === label ? null : label);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border shadow-sm">
-      <div className="container mx-auto flex items-center justify-between h-16 px-4">
-        <Link to="/" className="flex items-center gap-2">
+      <div className="container mx-auto flex items-center h-16 px-4">
+        {/* Logo — left */}
+        <Link to="/" className="flex items-center gap-2 shrink-0">
           <img src={logo} alt="RSverse" className="h-10 w-10" />
-          <span className="font-display text-xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">RSverse</span>
+          <span className="font-display text-xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+            RSverse
+          </span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-5">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                location.pathname === item.path ? "text-primary" : "text-muted-foreground"
-              }`}
-            >
-              {item.label}
-            </Link>
-          ))}
-
-          {/* Internship Dropdown */}
-          <div className="relative" ref={dropdownRef}>
-            <button
-              onClick={() => setInternshipOpen(!internshipOpen)}
-              className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${
-                isInternshipRoute ? "text-primary" : "text-muted-foreground"
-              }`}
-            >
-              <GraduationCap size={16} /> Internships <ChevronDown size={14} className={`transition-transform ${internshipOpen ? "rotate-180" : ""}`} />
-            </button>
-            {internshipOpen && (
-              <div className="absolute top-full mt-2 right-0 w-52 bg-popover border border-border rounded-lg shadow-lg py-1 z-50">
-                {getInternshipSubMenu(!!user).map((item) => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setInternshipOpen(false)}
-                    className={`flex items-center gap-2 px-4 py-2.5 text-sm transition-colors hover:bg-accent ${
-                      location.pathname === item.path ? "text-primary bg-accent/50" : "text-foreground"
-                    }`}
-                  >
-                    <item.icon size={15} /> {item.label}
-                  </Link>
-                ))}
+        {/* Desktop Navigation — centered */}
+        <nav className="hidden lg:flex items-center justify-center gap-8 flex-1">
+          {navigationMenu.map((item) => {
+            const active = isDropdownActive(item.items);
+            return (
+              <div key={item.label} className="relative group py-2">
+                <button
+                  className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${
+                    active ? "text-primary font-semibold" : "text-muted-foreground"
+                  }`}
+                >
+                  {item.label}
+                  <ChevronDown
+                    size={14}
+                    className="group-hover:rotate-180 transition-transform duration-200 text-muted-foreground/75"
+                  />
+                </button>
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-80 rounded-2xl bg-card border border-border/80 p-2 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top scale-95 group-hover:scale-100 z-50">
+                  <div className="grid gap-1">
+                    {item.items.map((subItem) => {
+                      const Icon = subItem.icon;
+                      const subActive = location.pathname === subItem.path;
+                      return (
+                        <Link
+                          key={subItem.path}
+                          to={subItem.path}
+                          className={`flex gap-3.5 p-3 rounded-xl hover:bg-muted/60 transition-colors ${
+                            subActive ? "bg-muted/40 text-primary" : "text-foreground"
+                          }`}
+                        >
+                          <div className={`h-9 w-9 rounded-lg flex items-center justify-center shrink-0 ${
+                            subActive ? "bg-primary/20 text-primary" : "bg-primary/5 text-primary"
+                          }`}>
+                            <Icon size={18} />
+                          </div>
+                          <div>
+                            <div className="text-xs font-bold">{subItem.label}</div>
+                            <div className="text-[10px] text-muted-foreground mt-0.5 leading-snug">
+                              {subItem.description}
+                            </div>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
-            )}
-          </div>
+            );
+          })}
+        </nav>
+
+        {/* Right side — auth buttons */}
+        <div className="hidden lg:flex items-center gap-4 shrink-0">
+          {user && (
+            <Link
+              to="/student-dashboard"
+              className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+            >
+              <GraduationCap size={16} /> Dashboard
+            </Link>
+          )}
 
           {isAdmin && (
-            <Link to="/admin" className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+            <Link
+              to="/admin"
+              className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+            >
               <LayoutDashboard size={16} /> Admin
             </Link>
           )}
           {user ? (
-            <button onClick={handleSignOut} className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground">
+            <button
+              onClick={handleSignOut}
+              className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground"
+            >
               <LogOut size={16} /> Sign Out
             </button>
           ) : (
@@ -119,56 +162,104 @@ const Header = () => {
               Sign In
             </Link>
           )}
-        </nav>
+        </div>
 
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="lg:hidden text-foreground" aria-label="Toggle menu">
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="lg:hidden text-foreground p-1 ml-auto"
+          aria-label="Toggle menu"
+        >
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
+      {/* Mobile Navigation */}
       {mobileOpen && (
-        <div className="lg:hidden bg-background border-b border-border px-4 pb-4">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              onClick={() => setMobileOpen(false)}
-              className={`block py-3 text-sm font-medium transition-colors ${
-                location.pathname === item.path ? "text-accent" : "text-muted-foreground"
-              }`}
-            >
-              {item.label}
-            </Link>
-          ))}
-          <div className="border-t border-border my-2 pt-2">
-            <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1 px-1">Internships</p>
-            {getInternshipSubMenu(!!user).map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                onClick={() => setMobileOpen(false)}
-                className={`flex items-center gap-2 py-2.5 text-sm font-medium transition-colors ${
-                  location.pathname === item.path ? "text-primary" : "text-muted-foreground"
-                }`}
-              >
-                <item.icon size={15} /> {item.label}
-              </Link>
-            ))}
+        <div className="lg:hidden bg-background border-b border-border px-4 pb-4 max-h-[80vh] overflow-y-auto">
+          <div className="space-y-1">
+            {navigationMenu.map((item) => {
+              const active = isDropdownActive(item.items);
+              const expanded = expandedMobileMenu === item.label;
+              return (
+                <div key={item.label} className="border-b border-border/40 py-1.5">
+                  <button
+                    onClick={() => toggleMobileMenu(item.label)}
+                    className={`flex items-center justify-between w-full py-2 text-sm font-semibold hover:text-primary ${
+                      active ? "text-primary" : "text-muted-foreground"
+                    }`}
+                  >
+                    {item.label}
+                    <ChevronDown
+                      size={16}
+                      className={`transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  {expanded && (
+                    <div className="pl-4 pb-2 space-y-1 mt-1">
+                      {item.items.map((subItem) => {
+                        const Icon = subItem.icon;
+                        const subActive = location.pathname === subItem.path;
+                        return (
+                          <Link
+                            key={subItem.path}
+                            to={subItem.path}
+                            onClick={() => setMobileOpen(false)}
+                            className={`flex items-center gap-2.5 py-2.5 text-xs font-semibold hover:text-primary ${
+                              subActive ? "text-primary" : "text-muted-foreground"
+                            }`}
+                          >
+                            <Icon size={15} className={subActive ? "text-primary" : "text-muted-foreground/70"} />
+                            {subItem.label}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
-          {isAdmin && (
-            <Link to="/admin" onClick={() => setMobileOpen(false)} className="block py-3 text-sm font-medium text-accent">
-              Admin Dashboard
-            </Link>
-          )}
-          {user ? (
-            <button onClick={() => { handleSignOut(); setMobileOpen(false); }} className="block py-3 text-sm font-medium text-muted-foreground">
-              Sign Out
-            </button>
-          ) : (
-            <Link to="/login" onClick={() => setMobileOpen(false)} className="mt-2 block w-full text-center rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground">
-              Sign In
-            </Link>
-          )}
+
+          <div className="pt-4 space-y-2">
+            {user && (
+              <Link
+                to="/student-dashboard"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-2 py-3 text-sm font-semibold text-primary"
+              >
+                <GraduationCap size={18} /> Student Dashboard
+              </Link>
+            )}
+            {isAdmin && (
+              <Link
+                to="/admin"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-2 py-3 text-sm font-semibold text-primary"
+              >
+                <LayoutDashboard size={18} /> Admin Dashboard
+              </Link>
+            )}
+            {user ? (
+              <button
+                onClick={() => {
+                  handleSignOut();
+                  setMobileOpen(false);
+                }}
+                className="flex items-center gap-2 w-full text-left py-3 text-sm font-semibold text-muted-foreground hover:text-foreground"
+              >
+                <LogOut size={18} /> Sign Out
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                onClick={() => setMobileOpen(false)}
+                className="mt-2 block w-full text-center rounded-lg bg-gradient-to-r from-primary to-purple-600 text-white px-5 py-2.5 text-sm font-bold"
+              >
+                Sign In
+              </Link>
+            )}
+          </div>
         </div>
       )}
     </header>
@@ -176,3 +267,4 @@ const Header = () => {
 };
 
 export default Header;
+

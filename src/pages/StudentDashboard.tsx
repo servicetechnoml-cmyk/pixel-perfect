@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Award, Clock, Send, ExternalLink, AlertTriangle, CalendarDays } from "lucide-react";
+import { Award, Clock, Send, ExternalLink, AlertTriangle, CalendarDays, User, Settings } from "lucide-react";
 
 type Application = {
   id: string;
@@ -99,6 +99,8 @@ const StudentDashboard = () => {
   const [certificates, setCertificates] = useState<Certificate[]>([]);
   const [submissionUrls, setSubmissionUrls] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState<string | null>(null);
+  const [profile, setProfile] = useState({ full_name: "", phone: "", company: "" });
+  const [updatingProfile, setUpdatingProfile] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -107,6 +109,15 @@ const StudentDashboard = () => {
 
   const fetchAll = async () => {
     if (!user) return;
+
+    const { data: prof } = await supabase.from("profiles").select("full_name, phone, company").eq("user_id", user.id).single();
+    if (prof) {
+      setProfile({
+        full_name: prof.full_name || "",
+        phone: prof.phone || "",
+        company: prof.company || ""
+      });
+    }
 
     const { data: apps } = await supabase
       .from("internship_applications")
@@ -178,6 +189,23 @@ const StudentDashboard = () => {
     setSubmitting(null);
   };
 
+  const handleUpdateProfile = async () => {
+    if (!user) return;
+    setUpdatingProfile(true);
+    const { error } = await supabase.from("profiles").update({
+      full_name: profile.full_name,
+      phone: profile.phone,
+      company: profile.company,
+    }).eq("user_id", user.id);
+    
+    if (error) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    } else {
+      toast({ title: "Success", description: "Profile updated successfully." });
+    }
+    setUpdatingProfile(false);
+  };
+
   if (authLoading) return (
     <div className="py-24">
       <div className="container mx-auto px-4 space-y-6">
@@ -213,12 +241,42 @@ const StudentDashboard = () => {
             {[1, 2].map((i) => (<div key={i} className="h-40 bg-muted rounded-xl animate-pulse" />))}
           </div>
         ) : (
-          <Tabs defaultValue="applications">
-            <TabsList className="mb-8">
+          <Tabs defaultValue="profile">
+            <TabsList className="mb-8 flex-wrap">
+              <TabsTrigger value="profile">Profile</TabsTrigger>
               <TabsTrigger value="applications">Applications</TabsTrigger>
               <TabsTrigger value="tasks">My Tasks</TabsTrigger>
               <TabsTrigger value="certificates">Certificates</TabsTrigger>
             </TabsList>
+
+            <TabsContent value="profile">
+              <Card className="max-w-2xl border-primary/20">
+                <CardHeader>
+                  <div className="flex items-center gap-2">
+                    <User className="text-primary" size={24} />
+                    <CardTitle className="text-xl">My Profile</CardTitle>
+                  </div>
+                  <CardDescription>Update your personal and professional details below.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium mb-1 block text-foreground">Full Name</label>
+                    <Input value={profile.full_name} onChange={(e) => setProfile({...profile, full_name: e.target.value})} placeholder="Your Name" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-1 block text-foreground">Phone Number</label>
+                    <Input value={profile.phone} onChange={(e) => setProfile({...profile, phone: e.target.value})} placeholder="+91 0000000000" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-1 block text-foreground">College / Company</label>
+                    <Input value={profile.company} onChange={(e) => setProfile({...profile, company: e.target.value})} placeholder="Institution Name" />
+                  </div>
+                  <Button onClick={handleUpdateProfile} disabled={updatingProfile} className="mt-4 gap-2 w-full md:w-auto">
+                    <Settings size={16} /> {updatingProfile ? "Updating..." : "Save Profile"}
+                  </Button>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
             <TabsContent value="applications">
               {applications.length === 0 ? (
