@@ -1,4 +1,5 @@
 import { Bell, Search, Menu } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/useAuth";
@@ -22,6 +23,12 @@ const DashboardTopNav = () => {
         <Menu className="h-5 w-5" />
         <span className="sr-only">Toggle menu</span>
       </Button>
+      <Link to="/" className="flex items-center gap-2 lg:hidden">
+        <img src="/logo.jpg" alt="RSverse Logo" className="w-7 h-7 rounded-md object-contain bg-white" />
+        <span className="font-display font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+          RSverse
+        </span>
+      </Link>
       <div className="w-full flex-1">
         <form className="relative hidden sm:flex items-center max-w-sm">
           <Search className="absolute left-2.5 h-4 w-4 text-muted-foreground" />

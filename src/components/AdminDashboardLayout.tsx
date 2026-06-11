@@ -1,5 +1,6 @@
+
 import { useState, useEffect } from "react";
-import { Link, Outlet, useLocation, Navigate } from "react-router-dom";
+import { Link, Outlet, useLocation, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,8 +37,9 @@ const adminNavLinks = [
 ];
 
 const AdminDashboardLayout = () => {
-  const { user, isAdmin, loading, signOut } = useAuth();
+  const { user, isAdmin, loading, signOut, setViewAsStudent } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   // Close sidebar on path changes
@@ -92,9 +94,7 @@ const AdminDashboardLayout = () => {
     <div className="flex flex-col h-full bg-card">
       <div className="flex h-16 shrink-0 items-center px-6 border-b border-border/60">
         <Link to="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center text-white font-bold text-sm">
-            R
-          </div>
+          <img src="/logo.jpg" alt="RSverse Logo" className="w-8 h-8 rounded-md object-contain bg-white" />
           <span className="font-display text-lg font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
             RSverse
           </span>
@@ -150,25 +150,7 @@ const AdminDashboardLayout = () => {
           </div>
         </div>
 
-        <div>
-          <p className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Quick Actions</p>
-          <div className="space-y-1">
-            <Link
-              to="/student-dashboard-legacy"
-              className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all duration-200"
-            >
-              <User className="h-[18px] w-[18px] text-muted-foreground/70" />
-              Student View
-            </Link>
-            <Link
-              to="/"
-              className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all duration-200"
-            >
-              <ArrowLeft className="h-[18px] w-[18px] text-muted-foreground/70" />
-              Back to Home
-            </Link>
-          </div>
-        </div>
+
       </nav>
 
       <div className="p-4 border-t border-border/60">
@@ -224,10 +206,38 @@ const AdminDashboardLayout = () => {
             </SheetContent>
           </Sheet>
 
+          {/* Mobile Logo */}
+          <Link to="/" className="flex items-center gap-2 lg:hidden">
+            <img src="/logo.jpg" alt="RSverse Logo" className="w-7 h-7 rounded-md object-contain bg-white" />
+            <span className="font-display font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+              RSverse
+            </span>
+          </Link>
+
+          {/* Student View Toggle (Text Reveal Button) */}
+          <div className="hidden sm:flex items-center">
+            <Button
+              variant="outline"
+              onClick={() => {
+                if (setViewAsStudent) setViewAsStudent(true);
+                navigate('/dashboard');
+              }}
+              className="group relative flex items-center justify-start overflow-hidden rounded-full w-9 h-9 hover:w-[140px] transition-all duration-300 ease-in-out bg-primary/10 border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground mr-4 px-0"
+              title="Switch to Student View"
+            >
+              <div className="w-9 h-9 flex items-center justify-center shrink-0">
+                <User className="h-4 w-4" />
+              </div>
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-xs font-medium pr-3">
+                Student View
+              </span>
+            </Button>
+          </div>
+
           {/* Breadcrumbs */}
           <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-            <span>Admin</span>
-            <ChevronRight className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Admin</span>
+            <ChevronRight className="h-3.5 w-3.5 hidden sm:inline" />
             <span className="font-medium text-foreground">{getBreadcrumbLabel()}</span>
           </div>
 

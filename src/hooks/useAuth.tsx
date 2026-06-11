@@ -8,6 +8,8 @@ type AuthContextType = {
   isBlocked: boolean;
   loading: boolean;
   signOut: () => Promise<void>;
+  viewAsStudent: boolean;
+  setViewAsStudent: (v: boolean) => void;
 };
 
 const AuthContext = createContext<AuthContextType>({
@@ -16,6 +18,8 @@ const AuthContext = createContext<AuthContextType>({
   isBlocked: false,
   loading: true,
   signOut: async () => {},
+  viewAsStudent: false,
+  setViewAsStudent: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -23,6 +27,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [viewAsStudent, setViewAsStudentState] = useState(() => {
+    return localStorage.getItem("technoml_view_as_student") === "true";
+  });
+
+  const setViewAsStudent = (v: boolean) => {
+    localStorage.setItem("technoml_view_as_student", String(v));
+    setViewAsStudentState(v);
+  };
 
   const checkRole = async (userId: string, email?: string) => {
     const { data } = await supabase.rpc("has_role", { _user_id: userId, _role: "admin" });
@@ -116,7 +128,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAdmin, isBlocked, loading, signOut }}>
+    <AuthContext.Provider value={{ user, isAdmin, isBlocked, loading, signOut, viewAsStudent, setViewAsStudent }}>
       {children}
     </AuthContext.Provider>
   );

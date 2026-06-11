@@ -48,8 +48,10 @@ import AdminHistory from "./components/admin/AdminHistory";
 
 const queryClient = new QueryClient();
 
+
+
 const DashboardRouter = () => {
-  const { user, isAdmin, loading } = useAuth();
+  const { user, isAdmin, loading, viewAsStudent } = useAuth();
 
   if (loading) {
     return (
@@ -66,7 +68,7 @@ const DashboardRouter = () => {
     return <Navigate to="/login" replace />;
   }
 
-  if (isAdmin) {
+  if (isAdmin && !viewAsStudent) {
     return <AdminDashboardLayout />;
   }
 
@@ -74,8 +76,8 @@ const DashboardRouter = () => {
 };
 
 const DashboardIndexSelector = () => {
-  const { isAdmin } = useAuth();
-  return isAdmin ? <AdminOverview /> : <DashboardOverview />;
+  const { isAdmin, viewAsStudent } = useAuth();
+  return (isAdmin && !viewAsStudent) ? <AdminOverview /> : <DashboardOverview />;
 };
 
 const App = () => (
