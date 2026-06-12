@@ -31,15 +31,23 @@ import {
   Legend
 } from "recharts";
 
-// Mock data for graphs representing trends
-const growthData = [
-  { name: "Jan", Students: 45, Certificates: 12 },
-  { name: "Feb", Students: 68, Certificates: 18 },
-  { name: "Mar", Students: 89, Certificates: 32 },
-  { name: "Apr", Students: 120, Certificates: 45 },
-  { name: "May", Students: 155, Certificates: 78 },
-  { name: "Jun", Students: 210, Certificates: 112 },
-];
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+function aggregateByMonth(rows: { created_at: string | null }[] | null, key: string) {
+  const now = new Date();
+  const months: { name: string; [k: string]: number | string }[] = [];
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    months.push({ name: MONTHS[d.getMonth()], [key]: 0, _year: d.getFullYear(), _month: d.getMonth() });
+  }
+  (rows || []).forEach((r) => {
+    if (!r.created_at) return;
+    const d = new Date(r.created_at);
+    const entry = months.find((m) => (m._year as number) === d.getFullYear() && (m._month as number) === d.getMonth());
+    if (entry) (entry[key] as number)++;
+  });
+  return months.map(({ _year, _month, ...rest }) => rest);
+}
 
 const COLORS = ["#3B82F6", "#8B5CF6", "#10B981", "#F59E0B"];
 
@@ -137,6 +145,44 @@ const AdminOverview = () => {
     }
   });
 
+  // Query 7: Monthly student signups (last 6 months)
+  const { data: monthlyStudents = [] } = useQuery({
+    queryKey: ["admin-monthly-students"],
+    queryFn: async () => {
+      const sixMonthsAgo = new Date();
+      sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("created_at")
+        .gte("created_at", sixMonthsAgo.toISOString());
+      if (error) throw error;
+      return data || [];
+    }
+  });
+
+  // Query 8: Monthly certificates issued (last 6 months)
+  const { data: monthlyCerts = [] } = useQuery({
+    queryKey: ["admin-monthly-certificates"],
+    queryFn: async () => {
+      const sixMonthsAgo = new Date();
+      sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+      const { data, error } = await supabase
+        .from("internship_certificates")
+        .select("created_at")
+        .gte("created_at", sixMonthsAgo.toISOString());
+      if (error) throw error;
+      return data || [];
+    }
+  });
+
+  // Merge monthly data for chart
+  const studentsByMonth = aggregateByMonth(monthlyStudents, "Students");
+  const certsByMonth = aggregateByMonth(monthlyCerts, "Certificates");
+  const growthData = studentsByMonth.map((s, i) => ({
+    ...s,
+    Certificates: certsByMonth[i]?.Certificates ?? 0,
+  }));
+
   const isStatsLoading = loadingStudents || loadingActive || loadingCertificates || loadingPending;
 
   const statCards = [
@@ -144,7 +190,7 @@ const AdminOverview = () => {
       label: "Total Students",
       value: totalStudents,
       icon: Users,
-      color: "from-blue-500/20 to-indigo-500/20 text-blue-600 dark:text-blue-400 border-blue-500/25",
+      color: "from-primary to-primary text-white border-transparent",
       trend: "+12% overall",
       description: "Registered learners"
     },
@@ -152,7 +198,7 @@ const AdminOverview = () => {
       label: "Active Internships",
       value: activeInternships,
       icon: Briefcase,
-      color: "from-emerald-500/20 to-teal-500/20 text-emerald-600 dark:text-emerald-400 border-emerald-500/25",
+      color: "from-primary to-accent text-white border-transparent",
       trend: "+8% this month",
       description: "Ongoing placements"
     },
@@ -160,7 +206,7 @@ const AdminOverview = () => {
       label: "Certificates Issued",
       value: certificatesCount,
       icon: Award,
-      color: "from-purple-500/20 to-pink-500/20 text-purple-600 dark:text-purple-400 border-purple-500/25",
+      color: "from-accent to-accent text-white border-transparent",
       trend: "Verifiable credentials",
       description: "Successfully completed"
     },
@@ -168,7 +214,7 @@ const AdminOverview = () => {
       label: "Pending Evaluations",
       value: pendingSubmissions,
       icon: Clock,
-      color: "from-amber-500/20 to-orange-500/20 text-amber-600 dark:text-amber-400 border-amber-500/25",
+      color: "from-accent to-primary text-white border-transparent",
       trend: "Awaiting review",
       description: "Submissions submitted"
     }
@@ -180,21 +226,21 @@ const AdminOverview = () => {
       desc: "Manually onboard a new intern profile",
       href: "/dashboard/students",
       icon: UserPlus,
-      color: "bg-blue-500/10 text-blue-600 hover:bg-blue-500/15"
+      color: "bg-primary/10 text-primary hover:bg-primary/20"
     },
     {
       title: "Create Internship",
       desc: "Add a new domain category",
       href: "/dashboard/internships",
       icon: PlusCircle,
-      color: "bg-purple-500/10 text-purple-600 hover:bg-purple-500/15"
+      color: "bg-accent/10 text-accent hover:bg-accent/20"
     },
     {
       title: "Issue Certificate",
       desc: "Distribute completion awards",
       href: "/dashboard/certifications",
       icon: FileBadge2,
-      color: "bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500/15"
+      color: "bg-primary/10 text-primary hover:bg-primary/20"
     }
   ];
 
@@ -276,7 +322,7 @@ const AdminOverview = () => {
               <CardDescription className="text-xs">Visualized monthly tracking data</CardDescription>
             </div>
             <div className="text-[11px] bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded-full font-semibold">
-              Live updates
+              Last 6 months
             </div>
           </CardHeader>
           <CardContent className="h-72">

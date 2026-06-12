@@ -152,10 +152,10 @@ const AdminReports = () => {
       {/* Cards Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: "Total Applications", value: totalApps, icon: TrendingUp, color: "text-blue-500 bg-blue-500/10 border-blue-500/20" },
+          { label: "Total Applications", value: totalApps, icon: TrendingUp, color: "text-primary bg-primary border-primary" },
           { label: "Active Interns", value: activeApps, icon: CheckCircle2, color: "text-emerald-500 bg-emerald-500/10 border-emerald-500/20" },
           { label: "Pending Placements", value: pendingApps, icon: Clock, color: "text-amber-500 bg-amber-500/10 border-amber-500/20" },
-          { label: "Certificates Distributed", value: totalCertificates, icon: Award, color: "text-purple-500 bg-purple-500/10 border-purple-500/20" },
+          { label: "Certificates Distributed", value: totalCertificates, icon: Award, color: "text-accent bg-accent border-accent" },
         ].map((stat, i) => {
           const Icon = stat.icon;
           return (

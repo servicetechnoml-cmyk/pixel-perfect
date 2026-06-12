@@ -24,8 +24,8 @@ const DashboardTopNav = () => {
         <span className="sr-only">Toggle menu</span>
       </Button>
       <Link to="/" className="flex items-center gap-2 lg:hidden">
-        <img src="/logo.jpg" alt="RSverse Logo" className="w-7 h-7 rounded-md object-contain" />
-        <span className="font-display font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+        <img src="/logo.jpg" alt="RSverse Logo" className="w-7 h-7 rounded-md object-contain bg-white" />
+        <span className="font-display font-bold text-primary">
           RSverse
         </span>
       </Link>
@@ -50,7 +50,7 @@ const DashboardTopNav = () => {
           <span className="sr-only">Notifications</span>
         </Button>
         <div className="flex items-center gap-2.5 border-l border-border/60 pl-3">
-          <div className="h-8 w-8 rounded-full bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center text-primary font-bold text-xs border border-primary/20">
+          <div className="h-8 w-8 rounded-full bg-gradient-to-br from-primary/20 to-accent flex items-center justify-center text-primary font-bold text-xs border border-primary/20">
             {initials}
           </div>
           <div className="hidden md:flex flex-col">

@@ -21,10 +21,10 @@ const Contact = () => {
   return (
     <div>
       {/* Hero */}
-      <section className="py-32 bg-gradient-to-br from-primary via-purple-600 to-primary text-white relative overflow-hidden">
+      <section className="py-32 bg-gradient-to-br from-primary via-accent to-primary text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-white blur-[120px]" />
-          <div className="absolute bottom-0 right-1/4 w-64 h-64 rounded-full bg-purple-200 blur-[80px]" />
+          <div className="absolute bottom-0 right-1/4 w-64 h-64 rounded-full bg-accent blur-[80px]" />
         </div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-white/70 text-sm font-semibold uppercase tracking-widest mb-4">Get In Touch</motion.p>
@@ -45,12 +45,12 @@ const Contact = () => {
         </div>
       </section>
 
-      <section className="py-24">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid gap-12 lg:grid-cols-3 max-w-5xl mx-auto">
             {/* Contact Info */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="space-y-6">
-              <motion.h2 variants={fadeUp} custom={0} className="font-display text-2xl font-bold text-foreground">
+              <motion.h2 variants={fadeUp} custom={0} className="font-display text-2xl font-bold text-gray-900">
                 Contact Information
               </motion.h2>
               {[
@@ -60,15 +60,15 @@ const Contact = () => {
                 { icon: Clock, label: "Response Time", value: "Within 24 hours" },
               ].map((c, i) => (
                 <motion.div key={c.label} variants={fadeUp} custom={i + 1} className="flex items-start gap-4 p-4 rounded-xl bg-card shadow-card border border-primary/10">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-primary/15 flex items-center justify-center shrink-0">
                     <c.icon className="text-primary" size={22} />
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground text-sm">{c.label}</p>
+                    <p className="font-semibold text-gray-900 text-sm">{c.label}</p>
                     {c.href ? (
-                      <a href={c.href} className="text-sm text-muted-foreground hover:text-primary transition-colors">{c.value}</a>
+                      <a href={c.href} className="text-sm text-gray-500 hover:text-primary transition-colors">{c.value}</a>
                     ) : (
-                      <p className="text-sm text-muted-foreground">{c.value}</p>
+                      <p className="text-sm text-gray-500">{c.value}</p>
                     )}
                   </div>
                 </motion.div>
@@ -95,48 +95,48 @@ const Contact = () => {
                   <p className="text-muted-foreground">We'll get back to you within 24 hours.</p>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="rounded-xl bg-card p-8 shadow-card space-y-5">
+                <form onSubmit={handleSubmit} className="rounded-xl bg-gray-50 p-8 shadow-sm border border-gray-100 space-y-5">
                   <div className="grid gap-5 md:grid-cols-2">
                     <motion.div variants={fadeUp} custom={0}>
-                      <label className="block text-sm font-medium text-foreground mb-1.5">Name</label>
+                      <label className="block text-sm font-medium text-gray-900 mb-1.5">Name</label>
                       <input
                         required
                         type="text"
-                        className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                        className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                         placeholder="Your name"
                       />
                     </motion.div>
                     <motion.div variants={fadeUp} custom={1}>
-                      <label className="block text-sm font-medium text-foreground mb-1.5">Email</label>
+                      <label className="block text-sm font-medium text-gray-900 mb-1.5">Email</label>
                       <input
                         required
                         type="email"
-                        className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                        className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                         placeholder="you@company.com"
                       />
                     </motion.div>
                   </div>
                   <div className="grid gap-5 md:grid-cols-2">
                     <motion.div variants={fadeUp} custom={2}>
-                      <label className="block text-sm font-medium text-foreground mb-1.5">Phone</label>
+                      <label className="block text-sm font-medium text-gray-900 mb-1.5">Phone</label>
                       <input
                         type="tel"
-                        className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                        className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                         placeholder="Your phone number"
                       />
                     </motion.div>
                     <motion.div variants={fadeUp} custom={3}>
-                      <label className="block text-sm font-medium text-foreground mb-1.5">Company</label>
+                      <label className="block text-sm font-medium text-gray-900 mb-1.5">Company</label>
                       <input
                         type="text"
-                        className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                        className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                         placeholder="Your company"
                       />
                     </motion.div>
                   </div>
                   <motion.div variants={fadeUp} custom={4}>
-                    <label className="block text-sm font-medium text-foreground mb-1.5">Project Type</label>
-                    <select className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring">
+                    <label className="block text-sm font-medium text-gray-900 mb-1.5">Project Type</label>
+                    <select className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
                       <option value="">Select a project type</option>
                       <option>AI Automation</option>
                       <option>Custom Software</option>
@@ -147,8 +147,8 @@ const Contact = () => {
                     </select>
                   </motion.div>
                   <motion.div variants={fadeUp} custom={5}>
-                    <label className="block text-sm font-medium text-foreground mb-1.5">Budget Range</label>
-                    <select className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring">
+                    <label className="block text-sm font-medium text-gray-900 mb-1.5">Budget Range</label>
+                    <select className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
                       <option value="">Select budget range</option>
                       <option>$1,000 - $5,000</option>
                       <option>$5,000 - $15,000</option>
@@ -157,18 +157,18 @@ const Contact = () => {
                     </select>
                   </motion.div>
                   <motion.div variants={fadeUp} custom={6}>
-                    <label className="block text-sm font-medium text-foreground mb-1.5">Message</label>
+                    <label className="block text-sm font-medium text-gray-900 mb-1.5">Message</label>
                     <textarea
                       required
                       rows={4}
-                      className="w-full rounded-lg border border-input bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none"
+                      className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
                       placeholder="Tell us about your project..."
                     />
                   </motion.div>
                   <motion.div variants={fadeUp} custom={7}>
                   <button
                       type="submit"
-                      className="w-full rounded-xl bg-gradient-to-r from-primary to-purple-600 text-white px-6 py-3.5 font-bold hover:shadow-lg hover:shadow-primary/25 hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
+                      className="w-full rounded-xl bg-primary text-white px-6 py-3.5 font-bold hover:shadow-lg hover:shadow-primary/25 hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
                     >
                       Send Message <Send size={18} />
                     </button>

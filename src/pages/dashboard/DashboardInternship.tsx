@@ -93,7 +93,7 @@ const DashboardInternship = () => {
           </div>
           <div className="opacity-40 pointer-events-none">
             <div className="rounded-xl bg-card border border-border/50 shadow-sm overflow-hidden">
-              <div className="h-28 bg-gradient-to-r from-primary via-purple-600 to-primary px-6 py-6 flex items-end">
+              <div className="h-28 bg-primary px-6 py-6 flex items-end">
                 <Badge className="bg-white/20 text-white border-none backdrop-blur-sm">Sample Internship Domain</Badge>
               </div>
               <div className="p-6">
@@ -133,7 +133,7 @@ const DashboardInternship = () => {
 
       <div className="rounded-xl bg-card border border-border/50 shadow-sm overflow-hidden">
         {/* Header Banner */}
-        <div className="h-28 bg-gradient-to-r from-primary via-purple-600 to-primary px-6 py-6 flex items-end">
+        <div className="h-28 bg-primary px-6 py-6 flex items-end">
           <Badge className="bg-white/20 text-white hover:bg-white/30 border-none backdrop-blur-sm">
             {app.domain?.title || "Internship"}
           </Badge>

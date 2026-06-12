@@ -35,8 +35,8 @@ const DashboardSidebar = () => {
     <aside className="hidden w-64 flex-col border-r border-border/60 bg-card lg:flex h-full">
       <div className="flex h-16 shrink-0 items-center px-6 border-b border-border/60">
         <Link to="/" className="flex items-center gap-2.5">
-          <img src="/logo.jpg" alt="RSverse Logo" className="w-8 h-8 rounded-md object-contain" />
-          <span className="font-display text-lg font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+          <img src="/logo.jpg" alt="RSverse Logo" className="w-8 h-8 rounded-md object-contain bg-white" />
+          <span className="font-display text-lg font-bold text-primary">
             RSverse
           </span>
         </Link>

@@ -27,12 +27,12 @@ const scaleIn = {
 };
 
 const features = [
-  { icon: Bot, title: "Fully Automated Flow", desc: "No manual intervention. System assigns, evaluates, and certificates.", color: "from-blue-500/20 to-cyan-500/20" },
-  { icon: BookOpen, title: "Self-Learning Docs", desc: "Comprehensive documentation to learn and build independently.", color: "from-violet-500/20 to-purple-500/20" },
-  { icon: MonitorPlay, title: "Video Resources", desc: "In-depth video tutorials for complex concepts and tools.", color: "from-emerald-500/20 to-teal-500/20" },
-  { icon: Briefcase, title: "Real-World Projects", desc: "Work on industry-standard tasks instead of generic assignments.", color: "from-orange-500/20 to-amber-500/20" },
-  { icon: Cloud, title: "Cloud Portal", desc: "Access your dashboard, tasks, and progress 24/7 from anywhere.", color: "from-sky-500/20 to-blue-500/20" },
-  { icon: Award, title: "Verified Certificates", desc: "Automated verifiable credential generation upon completion.", color: "from-rose-500/20 to-pink-500/20" },
+  { icon: Bot, title: "Fully Automated Flow", desc: "No manual intervention. System assigns, evaluates, and certificates.", color: "from-primary to-primary" },
+  { icon: BookOpen, title: "Self-Learning Docs", desc: "Comprehensive documentation to learn and build independently.", color: "from-accent to-accent" },
+  { icon: MonitorPlay, title: "Video Resources", desc: "In-depth video tutorials for complex concepts and tools.", color: "from-primary to-accent" },
+  { icon: Briefcase, title: "Real-World Projects", desc: "Work on industry-standard tasks instead of generic assignments.", color: "from-accent to-primary" },
+  { icon: Cloud, title: "Cloud Portal", desc: "Access your dashboard, tasks, and progress 24/7 from anywhere.", color: "from-primary to-primary" },
+  { icon: Award, title: "Verified Certificates", desc: "Automated verifiable credential generation upon completion.", color: "from-accent to-accent" },
 ];
 
 const whyUs = [
@@ -73,10 +73,10 @@ const Index = () => {
               Gain real-world experience through fully automated, self-paced projects with expert documentation and video resources.
             </motion.p>
             <motion.div variants={fadeUp} custom={3} className="flex flex-wrap gap-4 justify-center">
-              <Link to="/internships" className="group inline-flex items-center gap-2 rounded-xl bg-white px-8 py-4 text-lg font-semibold text-primary transition-all hover:shadow-2xl hover:scale-105">
+              <Link to="/internships" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-white px-8 py-4 text-base font-bold text-primary transition-all hover:shadow-xl hover:-translate-y-1">
                 Browse Internships <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link to="/resources" className="inline-flex items-center gap-2 rounded-xl border-2 border-white/30 backdrop-blur-sm px-8 py-4 text-lg font-semibold text-white transition-all hover:bg-white/10 hover:border-white/50">
+              <Link to="/resources" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-transparent border border-white/30 px-8 py-4 text-base font-bold text-white transition-all hover:bg-white/10 hover:-translate-y-1">
                 View Resources
               </Link>
             </motion.div>
@@ -86,19 +86,19 @@ const Index = () => {
       </section>
 
       {/* Stats Bar */}
-      <section className="relative z-20 py-12">
+      <section className="relative z-20 py-12 bg-white">
         <div className="container mx-auto px-4">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 p-8 md:p-10 shadow-elevated border border-primary/20"
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 rounded-2xl bg-primary/5 p-8 md:p-10 border border-primary/10"
           >
             {stats.map((s) => (
               <motion.div key={s.label} variants={scaleIn} className="text-center">
-                <p className="font-display text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">{s.value}</p>
-                <p className="text-sm md:text-base text-muted-foreground mt-2 font-medium">{s.label}</p>
+                <p className="font-display text-3xl md:text-4xl font-bold text-primary">{s.value}</p>
+                <p className="text-sm md:text-base text-gray-500 mt-2 font-medium">{s.label}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -106,24 +106,24 @@ const Index = () => {
       </section>
 
       {/* Why RSverse */}
-      <section className="py-24 bg-gradient-to-b from-background via-primary/5 to-background">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
-            <motion.h2 variants={fadeUp} custom={0} className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Why <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">RSverse</span>?
+            <motion.h2 variants={fadeUp} custom={0} className="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+               Why <span className="text-accent">RSverse</span>?
             </motion.h2>
-            <motion.p variants={fadeUp} custom={1} className="text-muted-foreground max-w-2xl mx-auto text-lg">
+            <motion.p variants={fadeUp} custom={1} className="text-gray-500 max-w-2xl mx-auto text-lg">
               We combine deep AI expertise with world-class software engineering to deliver solutions that matter.
             </motion.p>
           </motion.div>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {whyUs.map((item, i) => (
-              <motion.div key={item.title} variants={scaleIn} className="group rounded-2xl bg-card p-8 shadow-card hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 border border-transparent hover:border-primary/20">
-                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
+              <motion.div key={item.title} variants={scaleIn} className="group rounded-2xl bg-card p-8 shadow-sm border border-border/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 hover:border-primary/30">
+                <div className="w-16 h-16 rounded-xl bg-primary/15 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
                   <item.icon className="text-primary" size={28} />
                 </div>
-                <h3 className="font-display text-lg font-bold text-foreground mb-3">{item.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                <h3 className="font-display text-lg font-bold text-gray-900 mb-3">{item.title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -131,7 +131,7 @@ const Index = () => {
       </section>
 
       {/* Platform Features */}
-      <section className="py-24">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
             <motion.h2 variants={fadeUp} custom={0} className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">Everything You Need</motion.h2>
@@ -141,20 +141,20 @@ const Index = () => {
           </motion.div>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {features.map((s, i) => (
-              <motion.div key={s.title} variants={scaleIn} className="group relative rounded-2xl bg-gradient-to-br from-card to-primary/5 p-8 shadow-card hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 overflow-hidden border border-primary/10 hover:border-primary/30">
+              <motion.div key={s.title} variants={scaleIn} className="group relative rounded-2xl bg-card p-8 shadow-sm border border-border/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 hover:border-primary/30 overflow-hidden">
                 <div className={`absolute inset-0 bg-gradient-to-br ${s.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                 <div className="relative z-10">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-                    <s.icon className="text-primary" size={32} />
+                  <div className="w-16 h-16 rounded-2xl bg-accent/15 flex items-center justify-center mb-5 group-hover:bg-white/20 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                    <s.icon className="text-primary group-hover:text-white transition-colors" size={32} />
                   </div>
-                  <h3 className="font-display text-xl font-bold text-foreground mb-3">{s.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                  <h3 className="font-display text-xl font-bold text-foreground group-hover:text-white transition-colors mb-3">{s.title}</h3>
+                  <p className="text-sm text-muted-foreground group-hover:text-white/90 transition-colors leading-relaxed">{s.desc}</p>
                 </div>
               </motion.div>
             ))}
           </motion.div>
           <div className="text-center mt-12">
-            <Link to="/internships" className="group inline-flex items-center gap-2 text-primary font-bold text-lg hover:underline">
+            <Link to="/internships" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 text-base font-bold text-white transition-all hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-1">
               Start Your Journey <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -162,15 +162,15 @@ const Index = () => {
       </section>
 
       {/* Tech Stack */}
-      <section className="py-24 bg-gradient-to-b from-background via-primary/5 to-background">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-12">
-            <motion.h2 variants={fadeUp} custom={0} className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">Our Tech Stack</motion.h2>
-            <motion.p variants={fadeUp} custom={1} className="text-muted-foreground text-lg">Industry-leading tools and frameworks we master</motion.p>
+            <motion.h2 variants={fadeUp} custom={0} className="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-4">Our Tech Stack</motion.h2>
+            <motion.p variants={fadeUp} custom={1} className="text-gray-500 text-lg">Industry-leading tools and frameworks we master</motion.p>
           </motion.div>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
             {techStack.map((tech) => (
-              <motion.span key={tech} variants={scaleIn} className="rounded-full border-2 border-primary/20 bg-gradient-to-r from-primary/5 to-purple-600/5 px-6 py-2.5 text-sm font-semibold text-foreground shadow-card hover:border-primary/50 hover:shadow-primary/10 hover:shadow-lg hover:scale-110 transition-all duration-200 cursor-default">
+              <motion.span key={tech} variants={scaleIn} className="rounded-full border-2 border-primary/20 bg-primary/10 px-6 py-2.5 text-sm font-semibold text-gray-900 shadow-card hover:border-primary/50 hover:shadow-primary/10 hover:shadow-lg hover:scale-110 transition-all duration-200 cursor-default">
                 {tech}
               </motion.span>
             ))}
@@ -181,7 +181,7 @@ const Index = () => {
 
 
       {/* Testimonials */}
-      <section className="py-24 bg-gradient-to-b from-background via-primary/5 to-background">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="max-w-5xl mx-auto">
             <motion.div variants={fadeUp} custom={0} className="text-center mb-12">
@@ -194,7 +194,7 @@ const Index = () => {
                 { quote: "Fully automated task assignment and evaluation. I didn't have to wait for anyone to check my work. Highly recommended!", author: "Data Science Intern", stars: 5 },
                 { quote: "The real-world projects helped me build a portfolio that actually got me hired. The verified certificate was a big plus.", author: "Full Stack Intern", stars: 5 },
               ].map((t, i) => (
-                <motion.div key={i} variants={scaleIn} className="rounded-2xl bg-card p-8 shadow-card border border-primary/10 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300">
+                <motion.div key={i} variants={scaleIn} className="group rounded-2xl bg-card p-8 shadow-sm border border-border/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 hover:border-primary/30">
                   <div className="flex gap-1 mb-4">{[...Array(t.stars)].map((_, j) => <span key={j} className="text-yellow-400 text-lg">★</span>)}</div>
                   <p className="text-muted-foreground leading-relaxed mb-6 italic text-sm">"{t.quote}"</p>
                   <p className="text-xs font-bold text-foreground">— {t.author}</p>
@@ -208,14 +208,14 @@ const Index = () => {
       {/* ═══ INTERNSHIP PLATFORM SECTIONS ═══ */}
 
       {/* How It Works */}
-      <section className="py-24">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
             <motion.p variants={fadeUp} custom={0} className="text-primary font-semibold uppercase tracking-widest text-sm mb-3">Simple Process</motion.p>
-            <motion.h2 variants={fadeUp} custom={1} className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-              How It <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">Works</span>
+            <motion.h2 variants={fadeUp} custom={1} className="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              How It <span className="text-primary">Works</span>
             </motion.h2>
-            <motion.p variants={fadeUp} custom={2} className="text-muted-foreground max-w-2xl mx-auto text-lg">Your path to a successful career in 4 simple steps</motion.p>
+            <motion.p variants={fadeUp} custom={2} className="text-gray-500 max-w-2xl mx-auto text-lg">Your path to a successful career in 4 simple steps</motion.p>
           </motion.div>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
@@ -225,11 +225,11 @@ const Index = () => {
               { step: "04", title: "Certify", desc: "Get your official verified certificate" },
             ].map((item, i) => (
               <motion.div key={i} variants={scaleIn} className="flex flex-col items-center text-center group">
-                <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center text-2xl font-bold text-primary mb-5 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-primary/20 transition-all duration-300">
+                <div className="h-20 w-20 rounded-2xl bg-primary/10 flex items-center justify-center text-2xl font-bold text-primary mb-5 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-primary/20 transition-all duration-300">
                   {item.step}
                 </div>
-                <h3 className="font-display text-lg font-bold text-foreground mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                <h3 className="font-display text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -237,26 +237,26 @@ const Index = () => {
       </section>
 
       {/* Internship Categories */}
-      <section className="py-24 bg-gradient-to-b from-background via-primary/5 to-background">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-16">
             <motion.h2 variants={fadeUp} custom={0} className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Internship <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">Categories</span>
+              Internship <span className="text-accent">Categories</span>
             </motion.h2>
             <motion.p variants={fadeUp} custom={1} className="text-muted-foreground max-w-2xl mx-auto text-lg">Explore domains that match your passion</motion.p>
           </motion.div>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {[
-              { icon: Code, name: "Web Dev", color: "from-blue-500/20 to-cyan-500/20" },
-              { icon: MonitorPlay, name: "AI Automation", color: "from-violet-500/20 to-purple-500/20" },
-              { icon: Briefcase, name: "Mobile Apps", color: "from-emerald-500/20 to-teal-500/20" },
-              { icon: Megaphone, name: "Digital Marketing", color: "from-orange-500/20 to-amber-500/20" },
-              { icon: LayoutTemplate, name: "UI/UX Design", color: "from-pink-500/20 to-rose-500/20" },
-              { icon: PenTool, name: "DevOps", color: "from-sky-500/20 to-blue-500/20" },
+              { icon: Code, name: "Web Dev", color: "from-primary to-primary" },
+              { icon: MonitorPlay, name: "AI Automation", color: "from-accent to-accent" },
+              { icon: Briefcase, name: "Mobile Apps", color: "from-primary to-accent" },
+              { icon: Megaphone, name: "Digital Marketing", color: "from-accent to-primary" },
+              { icon: LayoutTemplate, name: "UI/UX Design", color: "from-accent to-accent" },
+              { icon: PenTool, name: "DevOps", color: "from-primary to-primary" },
             ].map((cat, i) => (
-              <motion.div key={i} variants={scaleIn} className="group flex flex-col items-center justify-center rounded-2xl bg-card p-6 shadow-card hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 border border-primary/10 hover:border-primary/30 cursor-pointer">
+              <motion.div key={i} variants={scaleIn} className="group flex flex-col items-center justify-center rounded-2xl bg-card p-8 shadow-sm border border-border/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 hover:border-primary/30 cursor-pointer">
                 <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${cat.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                  <cat.icon className="text-primary" size={24} />
+                  <cat.icon className="text-white" size={24} />
                 </div>
                 <h3 className="font-display font-bold text-sm text-foreground text-center">{cat.name}</h3>
               </motion.div>
@@ -266,40 +266,40 @@ const Index = () => {
       </section>
 
       {/* Featured Internships */}
-      <section className="py-24">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
             <div>
-              <motion.h2 variants={fadeUp} custom={0} className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-                Featured <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">Internships</span>
+              <motion.h2 variants={fadeUp} custom={0} className="font-display text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Featured <span className="text-primary">Internships</span>
               </motion.h2>
-              <motion.p variants={fadeUp} custom={1} className="text-muted-foreground text-lg">Kickstart your career with our top programs</motion.p>
+              <motion.p variants={fadeUp} custom={1} className="text-gray-500 text-lg">Kickstart your career with our top programs</motion.p>
             </div>
             <motion.div variants={fadeUp} custom={2}>
-              <Link to="/internships" className="group inline-flex items-center gap-2 text-primary font-bold hover:underline">
-                View All <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              <Link to="/internships" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 text-base font-bold text-white transition-all hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-1">
+                View All <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>
           </motion.div>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { title: "Frontend Web Developer", domain: "Web Development", duration: "4 Weeks", color: "from-blue-500/10 to-indigo-500/10" },
-              { title: "UX/UI Designer", domain: "Design", duration: "6 Weeks", color: "from-pink-500/10 to-rose-500/10" },
-              { title: "Machine Learning Trainee", domain: "AI Automation", duration: "8 Weeks", color: "from-violet-500/10 to-purple-500/10" },
+              { title: "Frontend Web Developer", domain: "Web Development", duration: "4 Weeks", color: "from-primary to-primary" },
+              { title: "UX/UI Designer", domain: "Design", duration: "6 Weeks", color: "from-accent to-accent" },
+              { title: "Machine Learning Trainee", domain: "AI Automation", duration: "8 Weeks", color: "from-accent to-accent" },
             ].map((intern, i) => (
-              <motion.div key={i} variants={scaleIn} className="group rounded-2xl bg-card overflow-hidden border border-border/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3">
+              <motion.div key={i} variants={scaleIn} className="group rounded-2xl bg-card overflow-hidden shadow-sm border border-border/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 hover:border-primary/30">
                 <div className={`h-40 bg-gradient-to-br ${intern.color} flex items-center justify-center`}>
-                  <div className="w-20 h-20 rounded-2xl bg-white/50 backdrop-blur-sm flex items-center justify-center shadow-lg">
-                    <GraduationCap className="text-primary" size={36} />
+                  <div className="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                    <GraduationCap className="text-white" size={36} />
                   </div>
                 </div>
                 <div className="p-6">
                   <span className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-[10px] font-semibold text-primary uppercase tracking-wide mb-3">Remote</span>
-                  <h3 className="font-display text-lg font-bold text-foreground mb-1">{intern.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">{intern.domain}</p>
+                  <h3 className="font-display text-lg font-bold text-gray-900 mb-1">{intern.title}</h3>
+                  <p className="text-sm text-gray-500 mb-4">{intern.domain}</p>
                   <div className="flex items-center justify-between pt-4 border-t border-border/40">
-                    <span className="text-sm font-medium text-foreground">{intern.duration}</span>
-                    <Link to="/register" className="inline-flex items-center gap-1 rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-white hover:bg-primary/90 transition-colors">
+                    <span className="text-sm font-medium text-gray-900">{intern.duration}</span>
+                    <Link to="/register" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 text-base font-bold text-white transition-all hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-1">
                       Apply Now
                     </Link>
                   </div>
@@ -311,10 +311,10 @@ const Index = () => {
       </section>
 
       {/* Why Choose RSverse - Benefits */}
-      <section className="py-24 bg-gradient-to-br from-primary via-purple-600 to-primary text-white relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-br from-primary via-accent to-primary text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-1/3 left-1/4 w-80 h-80 rounded-full bg-white blur-[100px]" />
-          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full bg-purple-300 blur-[80px]" />
+          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full bg-accent blur-[80px]" />
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid md:grid-cols-2 gap-12 items-center">
@@ -349,18 +349,18 @@ const Index = () => {
       </section>
 
       {/* Internship CTA */}
-      <section className="py-24 bg-gradient-to-b from-background via-primary/5 to-background">
+      <section className="py-24 bg-white">
         <div className="container mx-auto px-4 text-center">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
-            <motion.h2 variants={fadeUp} custom={0} className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6">
-              Ready to <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">Start</span>?
+            <motion.h2 variants={fadeUp} custom={0} className="font-display text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+              Ready to <span className="text-accent">Start</span>?
             </motion.h2>
-            <motion.p variants={fadeUp} custom={1} className="text-muted-foreground max-w-2xl mx-auto mb-10 text-xl">
+            <motion.p variants={fadeUp} custom={1} className="text-gray-500 max-w-2xl mx-auto mb-10 text-xl">
               Apply for an internship today and take the first step towards your dream career.
             </motion.p>
             <motion.div variants={fadeUp} custom={2}>
-              <Link to="/register" className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary to-purple-600 px-10 py-5 text-xl font-bold text-white transition-all hover:shadow-2xl hover:shadow-primary/30 hover:scale-105">
-                Apply for Internship Today <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
+              <Link to="/register" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-4 text-base font-bold text-white transition-all hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-1">
+                Apply for Internship Today <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>
           </motion.div>
@@ -368,10 +368,10 @@ const Index = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-gradient-to-br from-primary via-purple-600 to-primary text-white relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-br from-primary via-accent to-primary text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-white blur-[120px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-72 h-72 rounded-full bg-purple-300 blur-[100px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-72 h-72 rounded-full bg-accent blur-[100px]" />
         </div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
@@ -382,8 +382,8 @@ const Index = () => {
               Let's build something powerful together. Get a custom proposal tailored to your business needs.
             </motion.p>
             <motion.div variants={fadeUp} custom={2}>
-              <Link to="/contact" className="group inline-flex items-center gap-2 rounded-xl bg-white px-10 py-5 text-xl font-bold text-primary transition-all hover:shadow-2xl hover:scale-105">
-                Request a Quote Now <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
+              <Link to="/contact" className="group inline-flex items-center justify-center gap-2 rounded-xl bg-white px-8 py-4 text-base font-bold text-primary transition-all hover:shadow-xl hover:-translate-y-1">
+                Request a Quote Now <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>
           </motion.div>

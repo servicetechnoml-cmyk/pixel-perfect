@@ -83,8 +83,8 @@ const DashboardOverview = () => {
       title: "Internship Status",
       value: activeApp ? "Active" : apps.length > 0 ? "Pending" : "None",
       icon: Briefcase,
-      color: "text-blue-600",
-      bg: "bg-blue-500/10",
+      color: "text-primary",
+      bg: "bg-primary",
       trend: activeApp ? activeApp.domain?.title || "" : "Apply now",
     },
     {
@@ -107,8 +107,8 @@ const DashboardOverview = () => {
       title: "Overall Progress",
       value: `${progressPct}%`,
       icon: Trophy,
-      color: "text-purple-600",
-      bg: "bg-purple-500/10",
+      color: "text-accent",
+      bg: "bg-accent",
       trend: progressPct >= 80 ? "Almost there!" : progressPct > 0 ? "Keep it up!" : "Get started",
     },
   ];
@@ -199,7 +199,7 @@ const DashboardOverview = () => {
                 return (
                   <div key={i} className="flex items-center justify-between p-3 rounded-lg border border-border/40 bg-muted/20 hover:bg-muted/50 transition-colors">
                     <div className="flex items-center gap-3">
-                      <div className={`h-2.5 w-2.5 rounded-full ${status === "Done" ? "bg-emerald-500" : status === "Submitted" ? "bg-blue-500 animate-pulse" : "bg-orange-400"}`} />
+                      <div className={`h-2.5 w-2.5 rounded-full ${status === "Done" ? "bg-emerald-500" : status === "Submitted" ? "bg-primary animate-pulse" : "bg-orange-400"}`} />
                       <span className="text-sm font-medium text-foreground">Task {i + 1}</span>
                     </div>
                     <Badge variant="secondary" className="text-[11px]">{status}</Badge>
@@ -211,7 +211,7 @@ const DashboardOverview = () => {
         </div>
 
         {/* Current Internship Card */}
-        <div className="rounded-xl bg-gradient-to-br from-primary/5 to-purple-500/5 border border-primary/10 shadow-sm">
+        <div className="rounded-xl bg-gradient-to-br from-primary/5 to-accent border border-primary/10 shadow-sm">
           <div className="p-5 pb-3 border-b border-primary/10">
             <h2 className="text-base font-bold text-foreground">Current Internship</h2>
             <p className="text-xs text-muted-foreground">{activeApp?.domain?.title || "No active internship"}</p>

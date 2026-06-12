@@ -136,7 +136,7 @@ const DashboardProfile = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Avatar Card */}
         <div className="rounded-xl bg-card border border-border/50 shadow-sm p-6 flex flex-col items-center text-center">
-          <div className="h-28 w-28 rounded-full border-4 border-card shadow-lg bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center text-primary text-3xl font-bold mb-4 overflow-hidden relative group">
+          <div className="h-28 w-28 rounded-full border-4 border-card shadow-lg bg-gradient-to-br from-primary/20 to-accent flex items-center justify-center text-primary text-3xl font-bold mb-4 overflow-hidden relative group">
             {profile.avatar_url ? (
               <img src={profile.avatar_url} alt="Avatar" className="h-full w-full object-cover" />
             ) : (

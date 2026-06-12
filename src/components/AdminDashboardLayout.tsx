@@ -49,7 +49,7 @@ const AdminDashboardLayout = () => {
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-background">
+      <div className="flex h-screen items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="h-10 w-10 rounded-full border-4 border-primary/30 border-t-primary animate-spin" />
           <p className="text-sm text-muted-foreground font-medium">Loading Admin Portal...</p>
@@ -94,8 +94,8 @@ const AdminDashboardLayout = () => {
     <div className="flex flex-col h-full bg-card">
       <div className="flex h-16 shrink-0 items-center px-6 border-b border-border/60">
         <Link to="/" className="flex items-center gap-2.5">
-          <img src="/logo.jpg" alt="RSverse Logo" className="w-8 h-8 rounded-md object-contain" />
-          <span className="font-display text-lg font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+          <img src="/logo.jpg" alt="RSverse Logo" className="w-8 h-8 rounded-md object-contain bg-white" />
+          <span className="font-display text-lg font-bold text-primary">
             RSverse
           </span>
         </Link>
@@ -156,7 +156,7 @@ const AdminDashboardLayout = () => {
       <div className="p-4 border-t border-border/60">
         <div className="flex items-center justify-between p-2 rounded-xl bg-muted/40">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center text-primary font-bold text-xs border border-primary/20 shrink-0">
+            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-primary/20 to-accent flex items-center justify-center text-primary font-bold text-xs border border-primary/20 shrink-0">
               {initials}
             </div>
             <div className="flex flex-col min-w-0">
@@ -183,7 +183,7 @@ const AdminDashboardLayout = () => {
   );
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
+    <div className="flex h-screen overflow-hidden">
       {/* Desktop Sidebar */}
       <aside className="hidden w-64 flex-col border-r border-border/60 bg-card lg:flex h-full shrink-0">
         <SidebarContent />
@@ -208,8 +208,8 @@ const AdminDashboardLayout = () => {
 
           {/* Mobile Logo */}
           <Link to="/" className="flex items-center gap-2 lg:hidden">
-            <img src="/logo.jpg" alt="RSverse Logo" className="w-7 h-7 rounded-md object-contain" />
-            <span className="font-display font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+            <img src="/logo.jpg" alt="RSverse Logo" className="w-7 h-7 rounded-md object-contain bg-white" />
+            <span className="font-display font-bold text-primary">
               RSverse
             </span>
           </Link>

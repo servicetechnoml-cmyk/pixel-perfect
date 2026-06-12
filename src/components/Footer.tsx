@@ -6,7 +6,7 @@ const Footer = () => (
       <div className="grid gap-10 md:grid-cols-4">
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <img src="/footer logo.jpg" alt="RSverse" className="h-10 w-10 object-contain rounded-lg" />
+            <img src="/footer logo.jpg" alt="RSverse" className="h-24 w-24 object-contain rounded-lg" />
           </div>
           <p className="text-sm text-primary-foreground/70 leading-relaxed">
             Fully Automated Virtual Internship Platform empowering the next generation of professionals.
