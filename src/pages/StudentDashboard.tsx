@@ -18,6 +18,7 @@ type Application = {
   start_date: string | null;
   end_date: string | null;
   created_at: string | null;
+  user_id?: string;
   domain?: { title: string; duration_months: number };
 };
 
