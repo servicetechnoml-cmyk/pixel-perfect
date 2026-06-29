@@ -53,6 +53,91 @@ export type Database = {
         }
         Relationships: []
       }
+      assessment_results: {
+        Row: {
+          id: string
+          user_id: string
+          assessment_id: string
+          status: string
+          score: string | null
+          started_at: string | null
+          completed_at: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          assessment_id: string
+          status?: string
+          score?: string | null
+          started_at?: string | null
+          completed_at?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          assessment_id?: string
+          status?: string
+          score?: string | null
+          started_at?: string | null
+          completed_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assessment_results_assessment_id_fkey"
+            columns: ["assessment_id"]
+            isOneToOne: false
+            referencedRelation: "internship_assessments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      assessment_questions: {
+        Row: {
+          id: string
+          assessment_id: string
+          question_text: string
+          option_a: string
+          option_b: string
+          option_c: string
+          option_d: string
+          correct_option: string
+          order_number: number
+          created_at: string | null
+        }
+        Insert: {
+          id?: string
+          assessment_id: string
+          question_text: string
+          option_a: string
+          option_b: string
+          option_c: string
+          option_d: string
+          correct_option: string
+          order_number?: number
+          created_at?: string | null
+        }
+        Update: {
+          id?: string
+          assessment_id?: string
+          question_text?: string
+          option_a?: string
+          option_b?: string
+          option_c?: string
+          option_d?: string
+          correct_option?: string
+          order_number?: number
+          created_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assessment_questions_assessment_id_fkey"
+            columns: ["assessment_id"]
+            isOneToOne: false
+            referencedRelation: "internship_assessments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       certifications: {
         Row: {
           created_at: string | null
@@ -156,6 +241,47 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "internship_applications_domain_id_fkey"
+            columns: ["domain_id"]
+            isOneToOne: false
+            referencedRelation: "internship_domains"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      internship_assessments: {
+        Row: {
+          id: string
+          domain_id: string
+          title: string
+          type: string
+          duration_minutes: number
+          questions_count: number
+          is_active: boolean
+          created_at: string | null
+        }
+        Insert: {
+          id?: string
+          domain_id: string
+          title: string
+          type: string
+          duration_minutes?: number
+          questions_count?: number
+          is_active?: boolean
+          created_at?: string | null
+        }
+        Update: {
+          id?: string
+          domain_id?: string
+          title?: string
+          type?: string
+          duration_minutes?: number
+          questions_count?: number
+          is_active?: boolean
+          created_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "internship_assessments_domain_id_fkey"
             columns: ["domain_id"]
             isOneToOne: false
             referencedRelation: "internship_domains"
@@ -389,6 +515,36 @@ export type Database = {
           tech_stack?: string[] | null
           title?: string
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      support_tickets: {
+        Row: {
+          id: string
+          user_id: string | null
+          issue_type: string
+          subject: string
+          message: string
+          status: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id?: string | null
+          issue_type: string
+          subject: string
+          message: string
+          status?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string | null
+          issue_type?: string
+          subject?: string
+          message?: string
+          status?: string
+          created_at?: string
         }
         Relationships: []
       }

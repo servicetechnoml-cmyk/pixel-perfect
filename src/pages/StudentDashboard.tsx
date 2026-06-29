@@ -394,13 +394,40 @@ const StudentDashboard = () => {
             <TabsContent value="certificates">
               {certificates.length === 0 ? (
                 <p className="text-muted-foreground">No certificates earned yet. Complete all tasks to receive yours!</p>
-              ) : (
+              ) : (() => {
+                // Build a map from application_id to application for duration checks
+                const appMap: Record<string, Application> = {};
+                applications.forEach((a) => { appMap[a.id] = a; });
+
+                return (
                 <div className="grid md:grid-cols-2 gap-6">
-                  {certificates.map((cert) => (
-                    <Card key={cert.id} className="border-primary/20">
+                  {certificates.map((cert) => {
+                    // Find the matching application to check if duration has passed
+                    const certApp = applications.find(
+                      (a) => a.domain?.title === cert.domain_name && a.user_id === undefined
+                    ) || applications.find(
+                      (a) => a.domain?.title === cert.domain_name
+                    );
+
+                    let isLocked = false;
+                    let daysUntilUnlock = 0;
+                    let unlockDate: Date | null = null;
+
+                    if (certApp?.start_date && certApp?.domain?.duration_months) {
+                      unlockDate = new Date(certApp.start_date);
+                      unlockDate.setMonth(unlockDate.getMonth() + certApp.domain.duration_months);
+                      const now = new Date();
+                      if (now < unlockDate) {
+                        isLocked = true;
+                        daysUntilUnlock = Math.ceil((unlockDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+                      }
+                    }
+
+                    return (
+                    <Card key={cert.id} className={`border-primary/20 ${isLocked ? "opacity-70" : ""}`}>
                       <CardHeader>
                         <div className="flex items-center gap-2">
-                          <Award className="text-primary" size={24} />
+                          <Award className={isLocked ? "text-muted-foreground" : "text-primary"} size={24} />
                           <CardTitle className="text-lg">{cert.domain_name}</CardTitle>
                         </div>
                         <CardDescription>
@@ -408,32 +435,51 @@ const StudentDashboard = () => {
                         </CardDescription>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-xs text-muted-foreground mb-2">
-                          Certificate ID: <span className="font-mono text-foreground">{cert.id}</span>
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          Issued: {cert.issue_date ? new Date(cert.issue_date).toLocaleDateString() : "N/A"}
-                        </p>
-                        <div className="flex gap-2 mt-3">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => window.open(`/verify-certificate?id=${cert.id}`, "_blank")}
-                          >
-                            Verify
-                          </Button>
-                          <Button
-                            size="sm"
-                            onClick={() => navigate(`/certificate/${cert.id}`)}
-                          >
-                            <Award size={14} className="mr-1" /> View & Download
-                          </Button>
-                        </div>
+                        {isLocked ? (
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2 text-sm text-yellow-600 bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3">
+                              <Clock size={16} />
+                              <div>
+                                <p className="font-medium">Certificate locked</p>
+                                <p className="text-xs mt-0.5">
+                                  Available in {daysUntilUnlock} day(s) ({unlockDate?.toLocaleDateString()}).
+                                  Your internship duration must be completed first.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        ) : (
+                          <>
+                            <p className="text-xs text-muted-foreground mb-2">
+                              Certificate ID: <span className="font-mono text-foreground">{cert.id}</span>
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              Issued: {cert.issue_date ? new Date(cert.issue_date).toLocaleDateString() : "N/A"}
+                            </p>
+                            <div className="flex gap-2 mt-3">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => window.open(`/verify-certificate?id=${cert.id}`, "_blank")}
+                              >
+                                Verify
+                              </Button>
+                              <Button
+                                size="sm"
+                                onClick={() => navigate(`/certificate/${cert.id}`)}
+                              >
+                                <Award size={14} className="mr-1" /> View & Download
+                              </Button>
+                            </div>
+                          </>
+                        )}
                       </CardContent>
                     </Card>
-                  ))}
+                    );
+                  })}
                 </div>
-              )}
+                );
+              })()}
             </TabsContent>
           </Tabs>
         )}

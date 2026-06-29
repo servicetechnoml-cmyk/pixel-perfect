@@ -29,6 +29,7 @@ const Internships = () => {
   const [applying, setApplying] = useState<string | null>(null);
   const [selectedDomain, setSelectedDomain] = useState<Domain | null>(null);
   const [formData, setFormData] = useState({ full_name: "", email: "", phone: "", college: "" });
+  const [hasActiveInternship, setHasActiveInternship] = useState(false);
 
   useEffect(() => {
     fetchDomains();
@@ -41,9 +42,15 @@ const Internships = () => {
     if (user) {
       const { data: apps } = await supabase
         .from("internship_applications")
-        .select("domain_id")
+        .select("domain_id, status")
         .eq("user_id", user.id);
       setAppliedIds((apps || []).map((a) => a.domain_id));
+      
+      // Check if user has any active (not completed/rejected) internship
+      const activeApp = (apps || []).some(
+        (a) => a.status !== "completed" && a.status !== "rejected"
+      );
+      setHasActiveInternship(activeApp);
 
       // Pre-fill from profile
       const { data: profile } = await supabase
@@ -68,6 +75,14 @@ const Internships = () => {
       navigate("/login");
       return;
     }
+    if (hasActiveInternship) {
+      toast({ 
+        title: "Cannot apply", 
+        description: "You already have an active internship. Please complete or wait for your current internship to finish before applying for a new one.", 
+        variant: "destructive" 
+      });
+      return;
+    }
     setSelectedDomain(domain);
   };
 
@@ -87,10 +102,17 @@ const Internships = () => {
       company: formData.college,
     }).eq("user_id", user.id);
 
+    // Determine if user is new (created within last 1 hour)
+    const isNewUser = user.created_at 
+      ? new Date().getTime() - new Date(user.created_at).getTime() < 60 * 60 * 1000
+      : true; // fallback to true if created_at is missing for some reason
+      
+    const applicationStatus = isNewUser ? "pending" : "approved";
+
     const { error } = await supabase.from("internship_applications").insert({
       user_id: user.id,
       domain_id: selectedDomain.id,
-      status: "pending",
+      status: applicationStatus,
     });
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
@@ -144,6 +166,10 @@ const Internships = () => {
                     {applied ? (
                       <Button disabled variant="outline" className="w-full gap-2">
                         <CheckCircle size={16} /> Applied
+                      </Button>
+                    ) : hasActiveInternship ? (
+                      <Button disabled variant="outline" className="w-full gap-2 opacity-60">
+                        Complete Current Internship First
                       </Button>
                     ) : (
                       <Button onClick={() => openApplyForm(domain)} className="w-full gap-2">

@@ -190,6 +190,15 @@ const AdminStudents = () => {
           .eq("user_id", editStudent.user_id);
         if (profileError) throw profileError;
 
+        // 1.5 Update Password if provided
+        if (form.password) {
+          const { error: pwdError } = await (supabase.rpc as any)('admin_update_user_password', {
+            target_user_id: editStudent.user_id,
+            new_password: form.password
+          });
+          if (pwdError) throw new Error("Failed to reset password. Please ensure the latest database migrations are applied: " + pwdError.message);
+        }
+
         // 2. Manage Application
         if (form.domainId) {
           if (editStudent.application) {
@@ -582,10 +591,22 @@ const AdminStudents = () => {
                     />
                   </div>
                 ) : (
-                  <div className="space-y-1">
-                    <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Phone Number</label>
-                    <Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="h-9 text-xs" />
-                  </div>
+                  <>
+                    <div className="space-y-1">
+                      <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Phone Number</label>
+                      <Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="h-9 text-xs" />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Reset Password</label>
+                      <Input 
+                        type="text" 
+                        value={form.password} 
+                        onChange={(e) => setForm({ ...form, password: e.target.value })} 
+                        placeholder="Leave blank to keep current"
+                        className="h-9 text-xs font-mono" 
+                      />
+                    </div>
+                  </>
                 )}
 
                 {editStudent && (

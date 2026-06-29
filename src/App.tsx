@@ -9,6 +9,7 @@ import DashboardLayout from "./components/DashboardLayout";
 import AdminDashboardLayout from "./components/AdminDashboardLayout";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ScrollProgress from "./components/ScrollProgress";
 import Index from "./pages/Index";
 import Resources from "./pages/Resources";
 import Services from "./pages/Services";
@@ -83,6 +84,7 @@ const DashboardIndexSelector = () => {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <ScrollProgress />
       <Toaster />
       <Sonner />
       <BrowserRouter>

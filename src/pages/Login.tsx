@@ -6,10 +6,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
+import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -46,9 +48,16 @@ const Login = () => {
         return;
       }
       if (!roleData && !profile?.is_approved) {
-        await supabase.auth.signOut();
-        toast.error("Your account is pending admin approval.");
-        return;
+        // Auto-approve older accounts (created > 1 hour ago)
+        const createdAt = data.user.created_at ? new Date(data.user.created_at).getTime() : 0;
+        const isNewUser = Date.now() - createdAt < 60 * 60 * 1000;
+        if (isNewUser) {
+          await supabase.auth.signOut();
+          toast.error("Your account is pending admin approval.");
+          return;
+        }
+        // Auto-approve this older user
+        await supabase.from("profiles").update({ is_approved: true }).eq("user_id", data.user.id);
       }
       toast.success("Logged in successfully!");
       navigate("/dashboard");
@@ -69,7 +78,12 @@ const Login = () => {
           </div>
           <div>
             <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <div className="relative">
+              <Input id="password" type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} required className="pr-10" />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
           </div>
           <Button type="submit" className="w-full" disabled={loading}>
             {loading ? "Signing in..." : "Sign In"}

@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { MessageCircle, FileQuestion, BookOpen, Bug } from "lucide-react";
+import { MessageCircle, FileQuestion, BookOpen, Bug, Loader2 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 const helpCards = [
   { icon: BookOpen, title: "Knowledge Base", desc: "Browse guides and tutorials." },
@@ -9,6 +13,44 @@ const helpCards = [
 ];
 
 const DashboardSupport = () => {
+  const { user } = useAuth();
+  const [issueType, setIssueType] = useState("General Inquiry");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) {
+      toast({ title: "Error", description: "You must be logged in to submit a ticket.", variant: "destructive" });
+      return;
+    }
+    if (!subject.trim() || !message.trim()) {
+      toast({ title: "Validation Error", description: "Subject and Message are required.", variant: "destructive" });
+      return;
+    }
+
+    setIsSubmitting(true);
+    const { error } = await supabase.from("support_tickets").insert({
+      user_id: user.id,
+      issue_type: issueType,
+      subject: subject,
+      message: message,
+    });
+
+    setIsSubmitting(false);
+
+    if (error) {
+      console.error(error);
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    } else {
+      toast({ title: "Ticket Submitted!", description: "We will get back to you soon." });
+      setSubject("");
+      setMessage("");
+      setIssueType("General Inquiry");
+    }
+  };
+
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
       <div>
@@ -58,10 +100,14 @@ const DashboardSupport = () => {
 
           {/* Right Form */}
           <div className="p-7">
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-1.5">
                 <label className="text-xs font-medium text-foreground">Issue Type</label>
-                <select className="flex h-9 w-full rounded-lg border border-input bg-background px-3 py-1.5 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                <select 
+                  className="flex h-9 w-full rounded-lg border border-input bg-background px-3 py-1.5 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  value={issueType}
+                  onChange={(e) => setIssueType(e.target.value)}
+                >
                   <option>General Inquiry</option>
                   <option>Technical Issue</option>
                   <option>Mentorship Request</option>
@@ -70,17 +116,27 @@ const DashboardSupport = () => {
               </div>
               <div className="space-y-1.5">
                 <label className="text-xs font-medium text-foreground">Subject</label>
-                <Input placeholder="Briefly describe the issue..." className="h-9 text-sm" />
+                <Input 
+                  placeholder="Briefly describe the issue..." 
+                  className="h-9 text-sm" 
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                  disabled={isSubmitting}
+                />
               </div>
               <div className="space-y-1.5">
                 <label className="text-xs font-medium text-foreground">Message</label>
                 <textarea
                   className="flex w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-h-[100px] resize-y"
                   placeholder="Tell us what's going on..."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  disabled={isSubmitting}
                 />
               </div>
-              <Button type="button" className="w-full h-9 rounded-lg text-sm">
-                <MessageCircle className="mr-1.5 h-3.5 w-3.5" /> Submit Ticket
+              <Button type="submit" className="w-full h-9 rounded-lg text-sm" disabled={isSubmitting}>
+                {isSubmitting ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : <MessageCircle className="mr-1.5 h-3.5 w-3.5" />}
+                {isSubmitting ? "Submitting..." : "Submit Ticket"}
               </Button>
             </form>
           </div>
