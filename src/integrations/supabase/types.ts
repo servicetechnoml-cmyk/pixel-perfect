@@ -14,6 +14,44 @@ export type Database = {
   }
   public: {
     Tables: {
+      assessment_results: {
+        Row: {
+          assessment_id: string
+          completed_at: string | null
+          id: string
+          score: string | null
+          started_at: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          assessment_id: string
+          completed_at?: string | null
+          id?: string
+          score?: string | null
+          started_at?: string | null
+          status?: string
+          user_id: string
+        }
+        Update: {
+          assessment_id?: string
+          completed_at?: string | null
+          id?: string
+          score?: string | null
+          started_at?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assessment_results_assessment_id_fkey"
+            columns: ["assessment_id"]
+            isOneToOne: false
+            referencedRelation: "internship_assessments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       blog_posts: {
         Row: {
           author_id: string | null
@@ -52,91 +90,6 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: []
-      }
-      assessment_results: {
-        Row: {
-          id: string
-          user_id: string
-          assessment_id: string
-          status: string
-          score: string | null
-          started_at: string | null
-          completed_at: string | null
-        }
-        Insert: {
-          id?: string
-          user_id: string
-          assessment_id: string
-          status?: string
-          score?: string | null
-          started_at?: string | null
-          completed_at?: string | null
-        }
-        Update: {
-          id?: string
-          user_id?: string
-          assessment_id?: string
-          status?: string
-          score?: string | null
-          started_at?: string | null
-          completed_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "assessment_results_assessment_id_fkey"
-            columns: ["assessment_id"]
-            isOneToOne: false
-            referencedRelation: "internship_assessments"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      assessment_questions: {
-        Row: {
-          id: string
-          assessment_id: string
-          question_text: string
-          option_a: string
-          option_b: string
-          option_c: string
-          option_d: string
-          correct_option: string
-          order_number: number
-          created_at: string | null
-        }
-        Insert: {
-          id?: string
-          assessment_id: string
-          question_text: string
-          option_a: string
-          option_b: string
-          option_c: string
-          option_d: string
-          correct_option: string
-          order_number?: number
-          created_at?: string | null
-        }
-        Update: {
-          id?: string
-          assessment_id?: string
-          question_text?: string
-          option_a?: string
-          option_b?: string
-          option_c?: string
-          option_d?: string
-          correct_option?: string
-          order_number?: number
-          created_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "assessment_questions_assessment_id_fkey"
-            columns: ["assessment_id"]
-            isOneToOne: false
-            referencedRelation: "internship_assessments"
-            referencedColumns: ["id"]
-          },
-        ]
       }
       certifications: {
         Row: {
@@ -250,34 +203,34 @@ export type Database = {
       }
       internship_assessments: {
         Row: {
-          id: string
+          created_at: string
           domain_id: string
+          duration_minutes: number
+          id: string
+          is_active: boolean | null
+          questions_count: number
           title: string
           type: string
-          duration_minutes: number
-          questions_count: number
-          is_active: boolean
-          created_at: string | null
         }
         Insert: {
-          id?: string
+          created_at?: string
           domain_id: string
+          duration_minutes?: number
+          id?: string
+          is_active?: boolean | null
+          questions_count?: number
           title: string
           type: string
-          duration_minutes?: number
-          questions_count?: number
-          is_active?: boolean
-          created_at?: string | null
         }
         Update: {
-          id?: string
+          created_at?: string
           domain_id?: string
+          duration_minutes?: number
+          id?: string
+          is_active?: boolean | null
+          questions_count?: number
           title?: string
           type?: string
-          duration_minutes?: number
-          questions_count?: number
-          is_active?: boolean
-          created_at?: string | null
         }
         Relationships: [
           {
@@ -520,31 +473,31 @@ export type Database = {
       }
       support_tickets: {
         Row: {
-          id: string
-          user_id: string | null
-          issue_type: string
-          subject: string
-          message: string
-          status: string
           created_at: string
+          id: string
+          issue_type: string
+          message: string
+          status: string | null
+          subject: string
+          user_id: string | null
         }
         Insert: {
-          id?: string
-          user_id?: string | null
-          issue_type: string
-          subject: string
-          message: string
-          status?: string
           created_at?: string
+          id?: string
+          issue_type: string
+          message: string
+          status?: string | null
+          subject: string
+          user_id?: string | null
         }
         Update: {
-          id?: string
-          user_id?: string | null
-          issue_type?: string
-          subject?: string
-          message?: string
-          status?: string
           created_at?: string
+          id?: string
+          issue_type?: string
+          message?: string
+          status?: string | null
+          subject?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -571,6 +524,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_update_user_password: {
+        Args: { new_password: string; target_user_id: string }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
