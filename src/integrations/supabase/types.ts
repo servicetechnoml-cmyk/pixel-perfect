@@ -14,6 +14,53 @@ export type Database = {
   }
   public: {
     Tables: {
+      assessment_questions: {
+        Row: {
+          assessment_id: string
+          correct_option: string
+          created_at: string
+          id: string
+          option_a: string
+          option_b: string
+          option_c: string
+          option_d: string
+          order_number: number
+          question_text: string
+        }
+        Insert: {
+          assessment_id: string
+          correct_option: string
+          created_at?: string
+          id?: string
+          option_a: string
+          option_b: string
+          option_c: string
+          option_d: string
+          order_number?: number
+          question_text: string
+        }
+        Update: {
+          assessment_id?: string
+          correct_option?: string
+          created_at?: string
+          id?: string
+          option_a?: string
+          option_b?: string
+          option_c?: string
+          option_d?: string
+          order_number?: number
+          question_text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assessment_questions_assessment_id_fkey"
+            columns: ["assessment_id"]
+            isOneToOne: false
+            referencedRelation: "internship_assessments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       assessment_results: {
         Row: {
           assessment_id: string
